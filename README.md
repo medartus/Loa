@@ -10,8 +10,10 @@ A small AI-based conversational agent capable of providing accurate informations
 
   - [👩‍💻 Usage](#usage)
     - [Chatbot capabilities](#chatbot-capabilities)
-      - [`Show restaurants`](#show-restaurants)
-      - [`Find the best restaurant`](#best-restaurant)
+      - [Greeting](#greeting)
+      - [Search restaurants](#show-restaurants)
+      - [Find the best restaurant](#best-restaurant)
+      - [Number of restaurants](#number-restaurants)
     - [Recommendation Engine](#recommendation-engine)  
   - [🏃‍♀️ Testing](#testing)
   - [🎯 Objectives](#objectives)
@@ -30,9 +32,49 @@ A small AI-based conversational agent capable of providing accurate informations
 
 ### Chatbot Capabilities
 
+
+<a name="greeting"/>
+
+### **1 - Greeting**
+Type of Question
+
+* **Hello**, how are you ?
+* **Good morning**! 
+* **Hi**, what's up ?
+
+Node API :
+
+`Endpoint :` POST /message
+
+*Request :*
+
+```json
+{
+    "message": "Hi, what's up ?"
+}
+```
+
+*Response :*
+
+```json
+{
+    "intent": "Greeting",
+    "response": "Hi, I'm great, and you ?" (randomly picked)
+}
+```
+
+
+Intent :
+
+> **Hi**, what's up ?
+
+| Variable |  Value   |
+| :------: | :------: |
+| `Intent` | Greeting |
+
 <a name="show-restaurants"/>
 
-### **1 - Show restaurants**
+### **2 - Search restaurants**
 
 Type of Question :
 
@@ -192,7 +234,7 @@ GraphQL request :
 
 <a name="best-restaurant"/>
 
-### **2 - Find the best restaurant**
+### **3 - Find the best restaurant**
 Type of Question
 
 * What is the **best** **restaurant** in **New York** ?
@@ -264,15 +306,15 @@ Intent :
 
 > What is the **best** **restaurant** in **New York** ?
 
-|  Variable  |    Value    |
-| :--------: | :---------: |
-|  `Intent`  |    Best     |
-|  `Object`  | Restaurants |
-| `Location` |  New York   |
+|  Variable  |   Value    |
+| :--------: | :--------: |
+|  `Intent`  |    Best    |
+|  `Object`  | Restaurant |
+| `Location` |  New York  |
 
 Process System : `Yelp API`
 
-GrapQL Request :
+GraphQL Request :
 ```
 {
   search(term: "restaurant", location:"New York") {
@@ -298,6 +340,63 @@ GrapQL Request :
   }
 }
 ```
+
+<a name="number-restaurants" />
+
+### **4 - How many restaurants**
+Type of Question
+
+* How **many** **restaurants** are in **New York** ?
+* What is the number of **restaurants** around me ?
+* What is the **number** of **restaurants** in **Colorado** ?
+
+Node API :
+
+`Endpoint :` POST /message
+
+*Request :*
+
+```json
+{
+    "message": "What is the number of restaurants in Colorado?"
+}
+```
+
+*Response :*
+
+```json
+{
+    "intent": "Number",
+    "object": "Restaurants",
+    "location": {
+        "name": "Colorado",
+        "coordinates": {
+                "latitude": 40.7122775,
+                "longitude": -74.005973
+            }
+    },
+    "response": "There are 128 restaurants in Colorado"
+}
+```
+
+
+Intent :
+
+> What is the **number** of **restaurants** in **Colorado** ?
+
+|  Variable  |    Value    |
+| :--------: | :---------: |
+|  `Intent`  |   Number    |
+|  `Object`  | Restaurants |
+| `Location` |  Colorado   |
+
+Process System : `Yelp API`
+
+GraphQL Request :
+```
+
+```
+
 <a name="recommendation-engine"/>
 
 ### Recommendation Engine
@@ -337,6 +436,16 @@ We use [wit.ai](https://wit.ai) to convert text to intent using NLP. We have tra
 <a name="todo"/>
 
 ### To do
+
+- [x] Desing & Prototype on Figma
+- [ ] Define constraints and objectives 
+- [ ] Implement basic front-end interface
+- [ ] Train wit.ai agent on our intents
+- [ ] Design and Connect Node API to wit.ai
+- [ ] Gather data and design Recommendation Engine
+- [ ] Serve our APIS as services and host them
+- [ ] Finish front-end interface
+- [ ] Tests along the way 
 
 
 
