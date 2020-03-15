@@ -8,6 +8,12 @@ A small AI-based conversational agent capable of providing accurate informations
 
 ## **Table of contents**:
 
+  - [🎯 Objectives](#objectives)
+    - [Stack and implementation](#stack)
+      - [Front-End](#front-end)
+      - [Back-end](#back-end)
+        - [Chatbot API](#chatbot-api)
+        - [Recommendation Engine](#recommendation-engine-stack)
   - [👩‍💻 Usage](#usage)
     - [Chatbot capabilities](#chatbot-capabilities)
       - [Greeting](#greeting)
@@ -16,12 +22,6 @@ A small AI-based conversational agent capable of providing accurate informations
       - [Number of restaurants](#number-restaurants)
     - [Recommendation Engine](#recommendation-engine)  
   - [🏃‍♀️ Testing](#testing)
-  - [🎯 Objectives](#objectives)
-    - [Stack and implementation](#stack)
-      - [Front-End](#front-end)
-      - [Back-end](#back-end)
-        - [Chatbot API](#chatbot-api)
-        - [Recommendation Engine](#recommendation-engine-stack)
     - [To do](#todo)
 
 <a name="usage"/>
@@ -270,7 +270,7 @@ Gathering all of these steps, our API will return :
 Type of Question
 
 * What is the **best** **restaurant** in **New York** ?
-* What is the **best** **restaurant** around me ?
+* What is the **best** **restaurant** **around me** ?
 * Find the **best** **restaurant** in **Paris** ?
 * Find the **best** **restaurant** **near me** ?
 * Find the **best** **restaurant** near **111 8th Ave New York** ?
@@ -434,7 +434,7 @@ Gathering all of these steps, our API will return :
 Type of Question:
 
 * How **many** **restaurants** are in **New York** ?
-* What is the number of **restaurants** around me ?
+* What is the **number** of **restaurants** **around me** ?
 * What is the **number** of **restaurants** in **Colorado** ?
 
 
