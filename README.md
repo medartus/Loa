@@ -1,4 +1,3 @@
-"# Kuai" 
 # Kuai
 
 The goal is to create a chatbot wich can recommend restaurant and display with our custom web interface. 
