@@ -91,7 +91,8 @@ With the information, we call the `Yelp API` and use the relust to build our API
             "photos": [
                 "https://s3-media2.fl.yelpcdn.com/bphoto/9hGoyECcrewigEKYEnrYTw/o.jpg"
             ]
-        }
+        },
+        ...
     ]
 }
 ```
@@ -131,7 +132,109 @@ GrapQL Request :
 ```
 
 
-<!-- ### **Find the best restaurant**
+### **Find the best restaurant**
 Type of Question
 
-* What is the best restaurant in New York ? -->
+* What is the best restaurant in New York ?
+* What is the best restaurant around me ?
+* Find the best restaurant in Paris ?
+* Find the best restaurant near me ?
+* Find the best restaurant near 111 8th Ave New York ?
+
+Node API :
+
+`Endpoint :` POST /message
+
+*Request :*
+
+```json
+{
+    "message": "What is the best restaurant in New York ?",
+    "user": {
+        "coordinates": {
+                "latitude": 34.052234,
+                "longitude": -118.243685
+            }
+    }
+}
+```
+
+*Response :*
+
+```json
+{
+    "Intent": "Best",
+    "Object": "Restaurants",
+    "Location": {
+        "name": "New York",
+        "coordinates": {
+                "latitude": 40.7122775,
+                "longitude": -74.005973
+            }
+    },
+    "Response": "The best restaurant in New York is LoveMama.",
+    "Results": [
+        {
+            "name": "LoveMama",
+            "id": "jjJc_CrkB2HodEinB6cWww",
+            "url": "https://www.yelp.com/biz/lovemama-new-york?adjust_creative=94DePyCeUwdjASSwoI0YbA&utm_campaign=yelp_api_v3&utm_medium=api_v3_graphql&utm_source=94DePyCeUwdjASSwoI0YbA",
+            "display_phone": "(212) 254-5370",
+            "review_count": 4988,
+            "rating": 4.5,
+            "price": "$$",
+            "location": {
+                "address1": "174 2nd Ave",
+                "city": "New York",
+                "postal_code": "10003"
+            },
+            "coordinates": {
+                "latitude": 40.7303859,
+                "longitude": -73.9860613
+            },
+            "photos": [
+                "https://s3-media1.fl.yelpcdn.com/bphoto/bLlFKTlVuLfmF-lIDGIjZA/o.jpg"
+            ]
+        }
+    ]
+}
+```
+
+
+Intent :
+
+> What is the **best** **restaurant** in **New York** ?
+
+|Variable|Value|
+|:-:|:-:|
+|`Intent`|Best|
+|`Object`|Restaurants|
+|`Location`|New York|
+
+Process System : `Yelp API`
+
+GrapQL Request :
+```
+{
+  search(term: "restaurant", location:"New York") {
+    business {
+      name
+      id
+      url
+      display_phone
+      review_count
+      rating
+      price
+      location {
+        address1
+        city
+        postal_code
+      }
+      coordinates {
+        latitude
+        longitude
+      }
+      photos
+    }
+  }
+}
+```
