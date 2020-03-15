@@ -16,10 +16,10 @@ A small AI-based conversational agent capable of providing accurate informations
   - [🏃‍♀️ Testing](#testing)
   - [🎯 Objectives](#objectives)
     - [Stack and implementation](#stack)
-      - [Front-End] (#front-end)
-      - [Back-end] (#back-end)
-        - [Chatbot API] (#chatbot-api)
-        - [Recommendation Engine] (#recommendation-engine-stack)
+      - [Front-End](#front-end)
+      - [Back-end](#back-end)
+        - [Chatbot API](#chatbot-api)
+        - [Recommendation Engine](#recommendation-engine-stack)
     - [To do](#todo)
 
 <a name="usage"/>
