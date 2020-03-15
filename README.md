@@ -16,7 +16,7 @@ Type of Question :
 * Can you **show** me the **restaurants** **around me** ?
 * Can you **show** me the **restaurants** in **Los Angeles** ?
 * **Map** of **restaurants** in **Paris**.
-* What are the **better rated** **restaurants** in **Los Angeles** ?
+* What are the **most rated** **restaurants** in **Los Angeles** ?
 * Which **restaurants** are open **around me** ?
 
 #### Example
@@ -27,6 +27,8 @@ Type of Question :
 
 Requesting the Node API :  
 `Endpoint :` POST /message
+
+We call our Node API we this structure :
 
 ```json
 {
@@ -42,6 +44,8 @@ Requesting the Node API :
 
 *2 - Wit.ai Intent extraction :*
 
+Wit.ai will exctract intent and entities from the user question.
+
 The question :
 
 > Can you **show** me the **restaurants** in **Los Angeles** ?
@@ -56,8 +60,49 @@ Will return :
 
 *3 - Response :*
 
-With the information, we call the `Yelp API` and use the relust to build our API response :
+With the information, we call the `Yelp API` and use the result to build our API response :
 
+`Yelp API` result :
+
+```json
+{
+    "Results": [
+        {
+            "name": "Howlin' Ray's",
+            "id": "7O1ORGY36A-2aIENyaJWPg",
+            "url": "https://www.yelp.com/biz/howlin-rays-los-angeles-3?adjust_creative=94DePyCeUwdjASSwoI0YbA&utm_campaign=yelp_api_v3&utm_medium=api_v3_graphql&utm_source=94DePyCeUwdjASSwoI0YbA",
+            "display_phone": "(213) 935-8399",
+            "rating": 4.5,
+            "price": "$$",
+            "location": {
+                "address1": "727 N Broadway",
+                "city": "Los Angeles",
+                "postal_code": "90012"
+            },
+            "coordinates": {
+                "latitude": 34.061517,
+                "longitude": -118.239716
+            },
+            "photos": [
+                "https://s3-media2.fl.yelpcdn.com/bphoto/9hGoyECcrewigEKYEnrYTw/o.jpg"
+            ]
+        }
+    ]
+}
+```
+
+
+*4 - User reponse generation*
+
+After getting all the information in order to answer the user demand, **we use Natural Language Generation to display a response**.
+
+additionally, **we display the concenred result(s) on the right side of our web application**.
+
+In our example we want to display a map of the reslut and tell it to the user.
+
+*5 - Final Node API response*
+
+Gathering all of these steps, our API will return :
 
 ```json
 {
@@ -96,13 +141,6 @@ With the information, we call the `Yelp API` and use the relust to build our API
     ]
 }
 ```
-
-
-*4 - User reponse generation*
-
-After getting all the information in order to answer the user demand, we use Natural Language Generation to display a response.
-
-additionally, we display the concenred result(s) on the right side of our web application.
 
 
 GrapQL Request :
