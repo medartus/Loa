@@ -14,7 +14,7 @@ A small AI-based conversational agent capable of providing accurate informations
       - [Back-end](#back-end)
         - [Chatbot API](#chatbot-api)
         - [Recommendation Engine](#recommendation-engine-stack)
-  - [To do](#todo)
+  - [📝 To do](#todo)
   - [👩‍💻 Usage](#usage)
     - [Chatbot capabilities](#chatbot-capabilities)
       - [Greeting](#greeting)
@@ -54,7 +54,7 @@ We use [wit.ai](https://wit.ai) to convert text to intent using NLP. We have tra
 
 <a name="todo"/>
 
-### To do
+## 📝 To do
 
 - [x] Desing & Prototype on Figma
 - [ ] Define constraints and objectives 
