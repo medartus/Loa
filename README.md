@@ -36,41 +36,69 @@ A small AI-based conversational agent capable of providing accurate informations
 <a name="greeting"/>
 
 ### **1 - Greeting**
-Type of Question
+
+Type of Question:
 
 * **Hello**, how are you ?
 * **Good morning**! 
 * **Hi**, what's up ?
 
-Node API :
+#### Example
 
+*1 - Node.js API request :*
+
+Requesting the Node API :  
 `Endpoint :` POST /message
 
-*Request :*
+We call our Node API we this structure :
 
 ```json
 {
-    "message": "Hi, what's up ?"
+    "message": "Hi, what's up ?",
+    "user": {
+        "coordinates": {
+                "latitude": 34.052234,
+                "longitude": -118.243685
+            }
+    }
 }
 ```
 
-*Response :*
+*2 - Wit.ai Intent extraction :*
 
-```json
-{
-    "intent": "Greeting",
-    "message": "Hi, I'm great, and you ?" (randomly picked)
-}
-```
+Wit.ai will exctract intent and entities from the user question.
 
-
-Intent :
+The question :
 
 > **Hi**, what's up ?
+
+Will return :
 
 | Variable |  Value   |
 | :------: | :------: |
 | `Intent` | Greeting |
+
+*3 - User reponse generation*
+
+After getting all the information in order to answer the user demand, **we use Natural Language Generation to display a response**.
+
+additionally, **we display the concenred result(s) on the right side of our web application**.
+
+In our example we want to display a map of the reslut and tell it to the user.
+
+*4 - Node.js API response*
+
+Gathering all of these steps, our API will return :
+
+```json
+{
+    "intent": "Greeting",
+    "object": null,
+    "location": null,
+    "message": "Hi, I'm great, and you ?",
+    "results": []
+}
+```
 
 <a name="show-restaurants"/>
 
