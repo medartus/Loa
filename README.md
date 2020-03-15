@@ -49,7 +49,7 @@ Node API :
             }
     },
     "Response": "You will find a map of restaurants in Los Angeles.",
-    "Ressults": [
+    "Results": [
         {
             "name": "Howlin' Ray's",
             "id": "7O1ORGY36A-2aIENyaJWPg",
