@@ -1,15 +1,36 @@
-# Kuai
+# Loa 🧙‍♀️
 
-The goal is to create a chatbot wich can recommend restaurant and display with our custom web interface. 
+A small AI-based conversational agent capable of providing accurate informations about U.S located restaurants, and integrated with a content-based recommendation engine.
 
-## How does it work ?
-We use wit.ai to convert text to intent using NLP. We have trained a model in Python to recommend restaurant with the user preference. Otherwise if they don't need recommendation, we use the yelp API to provide some information. Node.js merge all this processing into one service wich is going to be easier to use in the front end.
+## Demo
 
-![stack schema](https://user-images.githubusercontent.com/45569127/76697698-96401400-669a-11ea-90af-80bbfb78d9ca.JPG)
+![](https://media.giphy.com/media/gfwGJdXuj08X4YcRQu/source.gif)
 
-## What can we do with it ?
+## **Table of contents**:
 
-### **Show restaurants**
+  - [👩‍💻 Usage](#%f0%9f%8f%83%e2%80%8d%e2%99%80%ef%b8%8f-usage)
+    - [Chatbot capabilities](#rest--graphql-endpoints)
+      - [`GET /movies/populate/:id`](#get-moviespopulateid)
+      - [`GET /movies`](#get-movies)
+      - [`GET /movies/:id`](#get-moviesid)
+      - [`GET /movies/search`](#get-moviessearch)
+      - [POST /movies/:id](#post-moviesid)
+    - [Recommendation Engine](#graphql-implemented)  
+  - [🏃‍♀️ Testing](#%f0%9f%91%a9%e2%80%8d%f0%9f%92%bb-installation)
+  - [🎯 Objectives](#%f0%9f%8e%af-objectives-of-the-project)
+    - [Stack and implementation](#bonus---the-client-side)
+      - [Front-End] (#front-end)
+      - [Back-end] (#back-end)
+        - [Chatbot API] (#chatbot-api)
+        - [Recommendation Engine] (#recommendation-engine)
+    - [To do](#todo)
+
+## 👩‍💻 Usage
+
+### Chatbot Capabilities
+
+
+### **1 - Show restaurants**
 
 Type of Question :
 
@@ -20,8 +41,6 @@ Type of Question :
 * Which **restaurants** are open **around me** ?
 
 #### Example
-
-
 
 *1 - Request :*
 
@@ -52,11 +71,11 @@ The question :
 
 Will return :
 
-|Variable|Value|
-|:-:|:-:|
-|`Intent`|Show|
-|`Object`|Restaurants|
-|`Location`|Los Angeles|
+|  Variable  |    Value    |
+| :--------: | :---------: |
+|  `Intent`  |    Show     |
+|  `Object`  | Restaurants |
+| `Location` | Los Angeles |
 
 *3 - Response :*
 
@@ -66,7 +85,7 @@ With the information, we call the `Yelp API` and use the result to build our API
 
 ```json
 {
-    "Results": [
+    "results": [
         {
             "name": "Howlin' Ray's",
             "id": "7O1ORGY36A-2aIENyaJWPg",
@@ -106,17 +125,17 @@ Gathering all of these steps, our API will return :
 
 ```json
 {
-    "Intent": "Show",
-    "Object": "Restaurants",
-    "Location": {
+    "intent": "Show",
+    "object": "Restaurants",
+    "location": {
         "name": "Los Angeles",
         "coordinates": {
                 "latitude": 34.052234,
                 "longitude": -118.243685
             }
     },
-    "Response": "You will find a map of restaurants in Los Angeles.",
-    "Results": [
+    "eesponse": "You will find a map of restaurants in Los Angeles.",
+    "results": [
         {
             "name": "Howlin' Ray's",
             "id": "7O1ORGY36A-2aIENyaJWPg",
@@ -143,7 +162,7 @@ Gathering all of these steps, our API will return :
 ```
 
 
-GrapQL Request :
+GraphQL request :
 ```
 {
   search(term: "restaurant", location:"Los Angeles") {
@@ -170,14 +189,14 @@ GrapQL Request :
 ```
 
 
-### **Find the best restaurant**
+### **2 - Find the best restaurant**
 Type of Question
 
-* What is the best restaurant in New York ?
-* What is the best restaurant around me ?
-* Find the best restaurant in Paris ?
-* Find the best restaurant near me ?
-* Find the best restaurant near 111 8th Ave New York ?
+* What is the **best** **restaurant** in **New York** ?
+* What is the **best** **restaurant** around me ?
+* Find the **best** **restaurant** in **Paris** ?
+* Find the **best** **restaurant** **near me** ?
+* Find the **best** **restaurant** near **111 8th Ave New York** ?
 
 Node API :
 
@@ -242,11 +261,11 @@ Intent :
 
 > What is the **best** **restaurant** in **New York** ?
 
-|Variable|Value|
-|:-:|:-:|
-|`Intent`|Best|
-|`Object`|Restaurants|
-|`Location`|New York|
+|  Variable  |    Value    |
+| :--------: | :---------: |
+|  `Intent`  |    Best     |
+|  `Object`  | Restaurants |
+| `Location` |  New York   |
 
 Process System : `Yelp API`
 
@@ -276,3 +295,30 @@ GrapQL Request :
   }
 }
 ```
+
+### Recommendation Engine
+
+## 🏃‍♀️ Testing
+
+## 🎯 Objectives
+
+### Tech-Stack and Implementation
+
+We use [wit.ai](https://wit.ai) to convert text to intent using NLP. We have trained a model in Python to recommend restaurant with the user preference. Otherwise if they don't need recommendation, we use the yelp API to provide some information. Node.js merge all this processing into one service wich is going to be easier to use in the front end.
+
+![stack schema](https://user-images.githubusercontent.com/45569127/76697698-96401400-669a-11ea-90af-80bbfb78d9ca.JPG)
+
+#### Front-end
+
+#### Back-end
+
+##### Chatbot API
+
+##### Recommendation Engine
+
+### To do
+
+
+
+
+
