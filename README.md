@@ -77,7 +77,7 @@ Node API :
 
 Intent :
 
-> Can you show me the restaurants in Los Angeles ?
+> Can you **show** me the **restaurants** in **Los Angeles** ?
 
 |Variable|Value|
 |:-:|:-:|
