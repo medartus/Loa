@@ -19,7 +19,7 @@ Type of Question :
 
 Node API :
 
-`Endpoint : ` POST /message
+`Endpoint :` POST /message
 
 *Request :*
 
