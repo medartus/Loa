@@ -14,6 +14,7 @@ A small AI-based conversational agent capable of providing accurate informations
       - [Back-end](#back-end)
         - [Chatbot API](#chatbot-api)
         - [Recommendation Engine](#recommendation-engine-stack)
+  - [To do](#todo)
   - [👩‍💻 Usage](#usage)
     - [Chatbot capabilities](#chatbot-capabilities)
       - [Greeting](#greeting)
@@ -22,7 +23,48 @@ A small AI-based conversational agent capable of providing accurate informations
       - [Number of restaurants](#number-restaurants)
     - [Recommendation Engine](#recommendation-engine)  
   - [🏃‍♀️ Testing](#testing)
-    - [To do](#todo)
+  
+<a name="objectives"/>
+
+## 🎯 Objectives
+
+<a name="stack"/>
+
+### Tech-Stack and Implementation
+
+We use [wit.ai](https://wit.ai) to convert text to intent using NLP. We have trained a model in Python to recommend restaurant with the user preference. Otherwise if they don't need recommendation, we use the yelp API to provide some information. Node.js merge all this processing into one service wich is going to be easier to use in the front end.
+
+![stack schema](https://user-images.githubusercontent.com/45569127/76697698-96401400-669a-11ea-90af-80bbfb78d9ca.JPG)
+
+<a name="front-end"/>
+
+#### Front-end
+
+<a name="back-end"/>
+
+#### Back-end
+
+<a name="chatbot-api"/>
+
+##### Chatbot API
+
+<a name="recommendation-engine-stack"/>
+
+##### Recommendation Engine
+
+<a name="todo"/>
+
+### To do
+
+- [x] Desing & Prototype on Figma
+- [ ] Define constraints and objectives 
+- [ ] Implement basic front-end interface
+- [ ] Train wit.ai agent on our intents
+- [ ] Design and Connect Node API to wit.ai
+- [ ] Gather data and design Recommendation Engine
+- [ ] Serve our APIS as services and host them
+- [ ] Finish front-end interface
+- [ ] Tests along the way 
 
 <a name="usage"/>
 
@@ -535,50 +577,3 @@ Gathering all of these steps, our API will return :
 <a name="testing"/>
 
 ## 🏃‍♀️ Testing
-
-<a name="objectives"/>
-
-## 🎯 Objectives
-
-<a name="stack"/>
-
-### Tech-Stack and Implementation
-
-We use [wit.ai](https://wit.ai) to convert text to intent using NLP. We have trained a model in Python to recommend restaurant with the user preference. Otherwise if they don't need recommendation, we use the yelp API to provide some information. Node.js merge all this processing into one service wich is going to be easier to use in the front end.
-
-![stack schema](https://user-images.githubusercontent.com/45569127/76697698-96401400-669a-11ea-90af-80bbfb78d9ca.JPG)
-
-<a name="front-end"/>
-
-#### Front-end
-
-<a name="back-end"/>
-
-#### Back-end
-
-<a name="chatbot-api"/>
-
-##### Chatbot API
-
-<a name="recommendation-engine-stack"/>
-
-##### Recommendation Engine
-
-<a name="todo"/>
-
-### To do
-
-- [x] Desing & Prototype on Figma
-- [ ] Define constraints and objectives 
-- [ ] Implement basic front-end interface
-- [ ] Train wit.ai agent on our intents
-- [ ] Design and Connect Node API to wit.ai
-- [ ] Gather data and design Recommendation Engine
-- [ ] Serve our APIS as services and host them
-- [ ] Finish front-end interface
-- [ ] Tests along the way 
-
-
-
-
-
