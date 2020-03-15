@@ -13,15 +13,20 @@ We use wit.ai to convert text to intent using NLP. We have trained a model in Py
 
 Type of Question :
 
-* Can you **show** me the **restaurants** **auround me** ?
+* Can you **show** me the **restaurants** **around me** ?
 * Can you **show** me the **restaurants** in **Los Angeles** ?
 * **Map** of **restaurants** in **Paris**.
+* What are the **better rated** **restaurants** in **Los Angeles** ?
+* Which **restaurants** are open **around me** ?
 
-Node API :
+#### Example
 
+
+
+*1 - Request :*
+
+Requesting the Node API :  
 `Endpoint :` POST /message
-
-*Request :*
 
 ```json
 {
@@ -35,7 +40,24 @@ Node API :
 }
 ```
 
-*Response :*
+*2 - Wit.ai Intent extraction :*
+
+The question :
+
+> Can you **show** me the **restaurants** in **Los Angeles** ?
+
+Will return :
+
+|Variable|Value|
+|:-:|:-:|
+|`Intent`|Show|
+|`Object`|Restaurants|
+|`Location`|Los Angeles|
+
+*3 - Response :*
+
+With the information, we call the `Yelp API` and use the relust to build our API response :
+
 
 ```json
 {
@@ -75,17 +97,12 @@ Node API :
 ```
 
 
-Intent :
+*4 - User reponse generation*
 
-> Can you **show** me the **restaurants** in **Los Angeles** ?
+After getting all the information in order to answer the user demand, we use Natural Language Generation to display a response.
 
-|Variable|Value|
-|:-:|:-:|
-|`Intent`|Show|
-|`Object`|Restaurants|
-|`Location`|Los Angeles|
+additionally, we display the concenred result(s) on the right side of our web application.
 
-Process System : `Yelp API`
 
 GrapQL Request :
 ```
