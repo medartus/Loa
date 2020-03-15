@@ -8,27 +8,29 @@ A small AI-based conversational agent capable of providing accurate informations
 
 ## **Table of contents**:
 
-  - [👩‍💻 Usage](#%f0%9f%8f%83%e2%80%8d%e2%99%80%ef%b8%8f-usage)
-    - [Chatbot capabilities](#rest--graphql-endpoints)
-      - [`GET /movies/populate/:id`](#get-moviespopulateid)
-      - [`GET /movies`](#get-movies)
-      - [`GET /movies/:id`](#get-moviesid)
-      - [`GET /movies/search`](#get-moviessearch)
-      - [POST /movies/:id](#post-moviesid)
-    - [Recommendation Engine](#graphql-implemented)  
-  - [🏃‍♀️ Testing](#%f0%9f%91%a9%e2%80%8d%f0%9f%92%bb-installation)
-  - [🎯 Objectives](#%f0%9f%8e%af-objectives-of-the-project)
-    - [Stack and implementation](#bonus---the-client-side)
+  - [👩‍💻 Usage](#usage)
+    - [Chatbot capabilities](#chatbot-capabilities)
+      - [`Show restaurants`](#show-restaurants)
+      - [`Find the best restaurant`](#best-restaurant)
+    - [Recommendation Engine](#recommendation-engine)  
+  - [🏃‍♀️ Testing](#testing)
+  - [🎯 Objectives](#objectives)
+    - [Stack and implementation](#stack)
       - [Front-End] (#front-end)
       - [Back-end] (#back-end)
         - [Chatbot API] (#chatbot-api)
-        - [Recommendation Engine] (#recommendation-engine)
+        - [Recommendation Engine] (#recommendation-engine-stack)
     - [To do](#todo)
+
+<a name="usage"/>
 
 ## 👩‍💻 Usage
 
+<a name="chatbot-capabilities"/>
+
 ### Chatbot Capabilities
 
+<a name="show-restaurants"/>
 
 ### **1 - Show restaurants**
 
@@ -188,6 +190,7 @@ GraphQL request :
 }
 ```
 
+<a name="best-restaurant"/>
 
 ### **2 - Find the best restaurant**
 Type of Question
@@ -295,12 +298,19 @@ GrapQL Request :
   }
 }
 ```
+<a name="recommendation-engine"/>
 
 ### Recommendation Engine
 
+<a name="testing"/>
+
 ## 🏃‍♀️ Testing
 
+<a name="objectives"/>
+
 ## 🎯 Objectives
+
+<a name="stack"/>
 
 ### Tech-Stack and Implementation
 
@@ -308,13 +318,23 @@ We use [wit.ai](https://wit.ai) to convert text to intent using NLP. We have tra
 
 ![stack schema](https://user-images.githubusercontent.com/45569127/76697698-96401400-669a-11ea-90af-80bbfb78d9ca.JPG)
 
+<a name="front-end"/>
+
 #### Front-end
+
+<a name="back-end"/>
 
 #### Back-end
 
+<a name="chatbot-api"/>
+
 ##### Chatbot API
 
+<a name="recommendation-engine-stack"/>
+
 ##### Recommendation Engine
+
+<a name="todo"/>
 
 ### To do
 
