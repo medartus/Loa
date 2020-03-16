@@ -1,0 +1,45 @@
+.bubble {
+  border-radius: 20px;
+  padding: 10px;
+  margin: 10px 10px 0px 10px;
+  max-width: 25vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bubble-text {
+  font-family: "Lato";
+  font-size: 16px;
+}
+
+.thinker {
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  background-color: #c4c4c4;
+}
+
+.t1 {
+  animation: thinking 1.6s ease-in-out 0ms infinite;
+}
+
+.t2 {
+  animation: thinking 1.6s ease-in-out 150ms infinite;
+}
+
+.t3 {
+  animation: thinking 1.6s ease-in-out 300ms infinite;
+}
+
+@keyframes thinking {
+  20% {
+    transform: translateY(-6px);
+  }
+  40% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

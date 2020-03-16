@@ -1,0 +1,27 @@
+.restaurant-container {
+  width: 60vw;
+  height: 100vh;
+  position: relative;
+}
+
+.header-results {
+  width: 100%;
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #4949e7;
+}
+
+.header-results-text {
+  font-size: 20px;
+  color: white;
+  letter-spacing: 10px;
+  font-family: "Lato";
+}
+
+@media only screen and (max-width: 920px) {
+  .restaurant-container {
+    width: 100vw;
+  }
+}
