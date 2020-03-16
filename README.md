@@ -93,7 +93,7 @@ Gathering all of these steps, our API will return :
 ```json
 {
     "intent": "Greeting",
-    "object": null,
+    "type": null,
     "location": null,
     "message": "Hi, I'm great, and you ?",
     "results": []
@@ -229,7 +229,7 @@ Gathering all of these steps, our API will return :
 ```json
 {
     "intent": "Search",
-    "object": "Restaurants",
+    "type": "Restaurants",
     "location": {
         "name": "Los Angeles",
         "coordinates": {
@@ -392,7 +392,7 @@ Gathering all of these steps, our API will return :
 ```json
 {
     "intent": "Best",
-    "object": "Restaurants",
+    "type": "Restaurants",
     "location": {
         "name": "New York",
         "coordinates": {
@@ -515,7 +515,7 @@ Gathering all of these steps, our API will return :
 ```json
 {
     "intent": "Number",
-    "object": "Restaurants",
+    "type": "Restaurants",
     "location": {
         "name": "Colorado",
         "coordinates": {
