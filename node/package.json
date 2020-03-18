@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon servers.js"
+    "start": "node server.js",
+    "dev": "SET ENVIRONMENT=dev& nodemon servers.js"
   },
   "author": "",
   "license": "ISC",
