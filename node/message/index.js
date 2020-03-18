@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { sendMessage, extractEntity } = require('./wit');
 const { ErrorHandler } = require('../helpers/error');
-const dispatch = require('./dispatch');
+const request = require('./request');
 
 router.post('/message', (req, res) => {
     const { message, user } = req.body;
@@ -14,35 +14,37 @@ router.post('/message', (req, res) => {
     if(user.coordinates.latitude === undefined) throw new ErrorHandler(404, 'latitude is required');
 
     sendMessage(message)
-        .then(data=>{
+        .then(async data => {
             const intent = extractEntity(data,'intent')
             const type = extractEntity(data,'type')
             const location = extractEntity(data,'location')
+            const personalLocation = extractEntity(data,'personalLocation')
 
-            switch (intent) {
-                case "Search":
-                    dispatch.search(intent,type,location)
-                        .then(response => res.send(response))
-                        .catch(e => {throw new ErrorHandler(500, e)})
-                    break;
-                case "Greeting" :
-                    dispatch.greetings(intent)
-                        .then(response => res.send(response))
-                        .catch(e => {throw new ErrorHandler(500, e)})
-                    break;
-                case "Best" :
-                    dispatch.best(intent,type,location)
-                        .then(response => res.send(response))
-                        .catch(e => {throw new ErrorHandler(500, e)})
-                    break;
-                case "Number" :
-                    dispatch.howMany(intent,type,location)
-                        .then(response => res.send(response))
-                        .catch(e => {throw new ErrorHandler(500, e)})
-                    break;
-                default:
-                    throw new ErrorHandler(500, 'No intent found');
-                    break;
+            if(intent === "Greeting"){
+                const response = request.greetings(intent)
+                res.send(response);
+            }
+            else{
+                let { latitude, longitude } = user.coordinates;
+
+                if(personalLocation != 'me'){
+                    await geocode(location).then(({lat,lng})=>{
+                        longitude = lng;
+                        latitude = lat;
+                    })
+                }
+                
+                const resultLocation = {
+                    "name": personalLocation === 'me' ? "near you" :  "near " + location,
+                    "coordinates":{
+                        latitude,
+                        longitude
+                    }
+                }
+                
+                request.yelpGraphQL(intent,type,resultLocation)
+                .then(response => res.send(response))
+                .catch(err => {throw new ErrorHandler(500, err)});
             }
         }).catch(e => {
             throw new ErrorHandler(500, e);
