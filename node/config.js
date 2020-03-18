@@ -1,10 +1,14 @@
 const dotenv = require('dotenv');
 
-const result = dotenv.config({ path: './.env'});
-if (result.error) {
-  throw result.error;
+let envs = process.env;
+
+if(process.env.ENVIRONMENT === 'dev'){
+  const result = dotenv.config({ path: './.env'});
+  if (result.error) {
+    throw result.error;
+  }
+  envs = result.parsed;
 }
 
-const { parsed: envs } = result;
 
-module.exports = process.env.ENVIRONMENT === 'dev' ? envs : process.env;
+module.exports = envs;
