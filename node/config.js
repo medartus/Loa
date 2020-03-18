@@ -10,4 +10,5 @@ if(process.env.ENVIRONMENT === 'dev'){
   envs = result.parsed;
 }
 
+
 module.exports = envs;
