@@ -18,8 +18,8 @@ const App = () => {
   const localizeUser = () => {
     navigator.geolocation.getCurrentPosition(position => {
       const userLocation = {
-        lat: position.coords.latitude,
-        long: position.coords.longitude
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
       };
       setUserLocation(userLocation);
     });
@@ -27,7 +27,7 @@ const App = () => {
 
   return (
     <div className="app">
-      <Chat />
+      <Chat userLocation={userLocation} setRestaurants={setRestaurants}/>
       <RestaurantContainer restaurants={restaurants} />
     </div>
   );

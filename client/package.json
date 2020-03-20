@@ -13,7 +13,7 @@
     "react-icons": "^3.9.0",
     "react-loading-skeleton": "^2.0.1",
     "react-map-gl": "^5.2.3",
-    "react-scripts": "3.3.0",
+    "react-scripts": "^3.4.0",
     "react-select": "^3.0.8"
   },
   "scripts": {
