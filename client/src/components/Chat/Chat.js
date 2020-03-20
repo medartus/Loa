@@ -18,7 +18,7 @@ const testBubbles = [
   }
 ];
 
-const Chat = () => {
+const Chat = ({userLocation,setRestaurants}) => {
   const [inputValue, setInputValue] = useState("");
   const [bubbles, setBubbles] = useState(testBubbles);
   const [shouldSend, setShouldSend] = useState(false);
@@ -32,20 +32,35 @@ const Chat = () => {
   }, [shouldSend]);
 
   useEffect(() => {
+
+    const callApi = () => {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: inputValue, user :{coordinates:userLocation} })
+      };
+      console.log(requestOptions)
+    return fetch('https://loa-bot.herokuapp.com/v1/message/', requestOptions)
+  }
+
     const handleBubbles = async () => {
       if (bubbles.length > 1) {
         const { type } = bubbles[0];
         console.log(type);
         // user has sent last message, we stop thinking the previous ones ane push thinking to last
         if (type === THINKING) {
-          const prevMessage = bubbles[1];
-          // const resp = await(bot, prevMessage)
-          await new Promise(resolve => setTimeout(resolve, BOT_WRITE_TIME));
-          setBotResponse("true");
+          // const prevMessage = bubbles[1];
+          callApi().then( response => response.json())
+                   .then( data => {
+                      setBotResponse(data.message)
+                      setRestaurants(data.results)
+                    })
+                   .catch(e => console.log(e)) 
         }
       }
     };
-    handleBubbles();
+    handleBubbles(inputValue);
+    setInputValue("")
   }, [bubbles]);
 
   useEffect(() => {
@@ -65,7 +80,6 @@ const Chat = () => {
       ...bubbles.filter(b => b.type !== THINKING)
     ]);
     setShouldSend(false);
-    setInputValue("");
   };
 
   const renderHeader = () => (
