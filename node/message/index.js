@@ -3,8 +3,10 @@ const router = express.Router();
 const { sendMessage, extractEntity } = require('./wit');
 const { ErrorHandler } = require('../helpers/error');
 const request = require('./request');
+const cors = require('cors');
 
 router.post('/message', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     const { message, user } = req.body;
     
     if(message === undefined) throw new ErrorHandler(404, 'message is required');
