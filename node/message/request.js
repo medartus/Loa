@@ -1,5 +1,4 @@
 const { graphqlQuery } = require('../api/graphql');
-const { geocode } = require('../api/maps');
 const { searchQuery, bestQuery, howManyQuery } = require('./query');
 const textualResponse = require('../response/response.json');
 
