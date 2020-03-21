@@ -3,10 +3,12 @@ const router = express.Router();
 const { sendMessage, extractEntity } = require('./wit');
 const { ErrorHandler } = require('../helpers/error');
 const request = require('./request');
-const cors = require('cors');
+const { geocode } = require('../api/maps');
 
 router.post('/message', (req, res) => {
+    
     res.header("Access-Control-Allow-Origin", "*");
+
     const { message, user } = req.body;
     
     if(message === undefined) throw new ErrorHandler(404, 'message is required');
@@ -17,39 +19,43 @@ router.post('/message', (req, res) => {
 
     sendMessage(message)
         .then(async data => {
-            const intent = extractEntity(data,'intent')
-            const type = extractEntity(data,'type')
-            const location = extractEntity(data,'location')
-            const personalLocation = extractEntity(data,'personalLocation')
-
-            if(intent === "Greeting"){
-                const response = request.greetings(intent)
-                res.send(response);
-            }
-            else{
-                let { latitude, longitude } = user.coordinates;
-
-                if(personalLocation != 'me'){
-                    await geocode(location).then(({lat,lng})=>{
-                        longitude = lng;
-                        latitude = lat;
-                    })
+            try {
+                const intent = extractEntity(data,'intent')
+                const type = extractEntity(data,'type')
+                const location = extractEntity(data,'location')
+                const personalLocation = extractEntity(data,'personalLocation')
+    
+                if(intent === "Greeting"){
+                    const response = request.greetings(intent)
+                    res.send(response);
                 }
-                
-                const resultLocation = {
-                    "name": personalLocation === 'me' ? "near you" :  "near " + location,
-                    "coordinates":{
-                        latitude,
-                        longitude
+                else{
+                    let { latitude, longitude } = user.coordinates;
+    
+                    if(personalLocation != 'me'){
+                        await geocode(location).then(({lat,lng})=>{
+                            longitude = lng;
+                            latitude = lat;
+                        })
                     }
+                    
+                    const resultLocation = {
+                        "name": personalLocation === 'me' ? "near you" :  "near " + location,
+                        "coordinates":{
+                            latitude,
+                            longitude
+                        }
+                    }
+                    
+                    request.yelpGraphQL(intent,type,resultLocation)
+                    .then(response => res.send(response))
+                    .catch(err => {throw new ErrorHandler(500, err)});
                 }
-                
-                request.yelpGraphQL(intent,type,resultLocation)
-                .then(response => res.send(response))
-                .catch(err => {throw new ErrorHandler(500, err)});
+            } catch (err) {
+                throw new ErrorHandler(500, err);
             }
-        }).catch(e => {
-            throw new ErrorHandler(500, e);
+        }).catch(err => {
+            throw new ErrorHandler(500, err);
         })
 });
 
