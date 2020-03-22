@@ -1,6 +1,6 @@
 const { graphqlQuery } = require('../api/graphql');
 const axios = require("axios")
-const { searchQuery, bestQuery, howManyQuery } = require('./query');
+const { businessQuery, searchQuery, bestQuery, howManyQuery } = require('./query');
 const textualResponse = require('../response/response.json');
 
 const generateResponse = (intent,type,location,message,results) =>{
@@ -13,6 +13,14 @@ const generateResponse = (intent,type,location,message,results) =>{
     }
     return response
 }
+
+const requestBusinessByIds = (ids) => new Promise((resolve,reject) => {
+    // ids = ["1SWheh84yJXfytovILXOAQ","QXAEGFB4oINsVuTFxEYKFQ","gnKjwL_1w79qoiV3IC_xQQ"]
+    const query = businessQuery(ids)
+    graphqlQuery(query).then(data => { 
+        resolve(data)
+    }).catch(e => reject(e))
+})
 
 const greetings = (intent) => {
 
@@ -29,11 +37,19 @@ const greetings = (intent) => {
 const recommend = ( intent, desire, location) => new Promise((resolve,reject) => {
     axios.post('http://localhost:5000/v1/recommend', {message: desire,})
     .then(response => {
-        results = response.data.data.results;
-        message = `Oh, ${desire} is a good idea! Let me recommend you these restaurants.`
-        rep = generateResponse(intent,desire,location,message,results)
-        resolve(rep)
-
+        const ids = response.data.data.results
+        requestBusinessByIds(ids).then(rep => {
+            results = []
+            for (let i = 0; i < ids.length;i++){
+                const business = rep[`b${i}`]
+                results.push(business)
+            }
+            console.log(results)
+            message = `Oh, ${desire} is a good idea! Let me recommend you these restaurants.`
+            rep = generateResponse(intent,desire,location,message,results)
+            resolve(rep)
+        })
+        .catch(err => error => reject(error));
     })
     .catch(error => reject(error));
 })
@@ -119,4 +135,4 @@ const yelpGraphQL = (intent,type,location) => new Promise((resolve,reject)=>{
 
 
 
-module.exports = { greetings, recommend, yelpGraphQL };
+module.exports = { requestBusinessByIds, greetings, recommend, yelpGraphQL };
