@@ -1,5 +1,3 @@
 node/node_modules/
 client/node_modules/
 node/.env
-recommenderAPI/data/model.pkl
-recommenderAPI/data/yelp_business.csv
