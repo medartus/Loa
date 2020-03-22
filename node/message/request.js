@@ -27,7 +27,7 @@ const greetings = (intent) => {
 }
 
 const recommend = ( intent, desire, location) => new Promise((resolve,reject) => {
-    axios.post('http://localhost:5000/v1/recommend', {message: desire,})
+    axios.post('http://recommendation:5000/v1/recommend', {message: desire,})
     .then(response => {
         results = response.data.data.results;
         message = `Oh, ${desire} is a good idea! Let me recommend you these restaurants.`

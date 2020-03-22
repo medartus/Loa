@@ -1,0 +1,38 @@
+version: '3'
+services:
+  recommendation:
+    build: ./recommenderAPI
+    restart: always
+    expose:
+      - 5000
+    ports:
+      - 5000:5000
+  api:
+    build: ./node
+    restart: always
+    expose:
+      - 4000
+    ports:
+      - 4000:4000
+    volumes:
+      - ./node:/usr/app
+    links:
+      - recommendation
+    depends_on:
+      - recommendation
+    command: node server.js
+  react:
+    build: ./client
+    restart: always
+    expose:
+      - 80
+    ports:
+      - 80:80
+    volumes:
+      - ./client/src:/app/src
+    links:
+      - api
+    depends_on:
+      - api 
+    # command: npm start
+    command: nginx -g "daemon off;"
