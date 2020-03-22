@@ -16,7 +16,7 @@ router.post('/message', (req, res) => {
     if(user.coordinates === undefined) throw new ErrorHandler(404, 'coordinates is required');
     if(user.coordinates.longitude === undefined) throw new ErrorHandler(404, 'longitude is required');
     if(user.coordinates.latitude === undefined) throw new ErrorHandler(404, 'latitude is required');
-
+    
     sendMessage(message)
         .then(async data => {
             try {
@@ -55,8 +55,10 @@ router.post('/message', (req, res) => {
                     //Recommend API handling
                     if(intent === "Recommend"){
                         request.recommend(intent,desire,location)
-                        .then(response => res.send(response))
-                        .catch(err => {throw new ErrorHandler(500, err)});;
+                        .then(response => {
+                            res.send(response)
+                        })
+                        .catch(err => {throw new ErrorHandler(500, err)});
                     }
                     //Yelp API handling
                     else{
