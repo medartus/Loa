@@ -1,4 +1,5 @@
 const { graphqlQuery } = require('../api/graphql');
+const axios = require("axios")
 const { searchQuery, bestQuery, howManyQuery } = require('./query');
 const textualResponse = require('../response/response.json');
 
@@ -24,6 +25,18 @@ const greetings = (intent) => {
     return response;
 
 }
+
+const recommend = ( intent, desire, location) => new Promise((resolve,reject) => {
+    axios.post('http://localhost:5000/v1/recommend', {message: desire,})
+    .then(response => {
+        results = response.data.data.results;
+        message = `Oh, ${desire} is a good idea! Let me recommend you these restaurants.`
+        rep = generateResponse(intent,desire,location,message,results)
+        resolve(rep)
+
+    })
+    .catch(error => reject(error));
+})
 
 
 const search = (intent,type,data,location) => {
@@ -75,7 +88,7 @@ const yelpGraphQL = (intent,type,location) => new Promise((resolve,reject)=>{
             query = bestQuery(type,longitude,latitude);
             break;
         case "Number" :
-            query = bestQuery(type,longitude,latitude);
+            query = howManyQuery(type,longitude,latitude);
             break;
         default:
             throw new ErrorHandler(500, 'No intent found');
@@ -106,4 +119,4 @@ const yelpGraphQL = (intent,type,location) => new Promise((resolve,reject)=>{
 
 
 
-module.exports = { greetings, yelpGraphQL };
+module.exports = { greetings, recommend, yelpGraphQL };

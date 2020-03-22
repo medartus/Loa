@@ -4,7 +4,7 @@ import "./Bubble.css";
 import { USER, THINKING } from "../../Constants";
 
 const Bubble = ({ type, message }) => {
-  const getStyles = () => {};
+  // const getStyles = () => {};
   const renderClassic = () => (
     <div
       className="bubble"

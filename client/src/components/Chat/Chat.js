@@ -5,10 +5,10 @@ import { IoMdSend } from "react-icons/io";
 import ResizableTextarea from "../ResizableTextarea";
 import Bubble from "../Bubble";
 
-import axios from "axios";
+// import axios from "axios";
 
 import logo from "../../assets/logo.png";
-import { BOT, USER, THINKING, BOT_WRITE_TIME } from "../../Constants";
+import { BOT, USER, THINKING } from "../../Constants";
 
 const testBubbles = [
   {
@@ -40,7 +40,8 @@ const Chat = ({userLocation,setRestaurants}) => {
         body: JSON.stringify({ message: input, user : { coordinates:userLocation } })
       };
       console.log(requestOptions)
-      return fetch('https://loa-bot.herokuapp.com/v1/message/', requestOptions)
+      // return fetch('https://loa-bot.herokuapp.com/v1/message/', requestOptions)
+      return fetch('http://localhost:4000/v1/message/', requestOptions)
   }
 
     const handleBubbles = async () => {
@@ -53,7 +54,6 @@ const Chat = ({userLocation,setRestaurants}) => {
         console.log(type);
         // user has sent last message, we stop thinking the previous ones ane push thinking to last
         if (type === THINKING) {
-          // const prevMessage = bubbles[1];
           callApi(input).then( response => response.json())
                         .then( data => {
                             const results = data.results !== null ? data.results : []

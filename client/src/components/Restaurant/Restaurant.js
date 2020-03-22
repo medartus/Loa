@@ -1,15 +1,15 @@
 import React from "react";
 import "./Restaurant.css";
-import { IoMdPricetag, IoIosStar, IoMdPhonePortrait } from "react-icons/io";
-import { GiCookingPot, GiChefToque } from "react-icons/gi";
+// import { IoMdPricetag, IoIosStar, IoMdPhonePortrait } from "react-icons/io";
+// import { GiCookingPot, GiChefToque } from "react-icons/gi";
 import Skeleton from "react-loading-skeleton";
 
 const Restaurant = ({ content }) => {
-  const getLocation = () =>
-    `${content.address.street}, ${content.address.town}, ${content.address.zipCode}`;
-  const getPrice = () => `${content.price.bottom} - ${content.price.top} EUR`;
-  const getRating = () =>
-    `${content.rating} / 5 (${content.numberVotes} votes)`;
+  // const getLocation = () =>
+  //   `${content.address.street}, ${content.address.town}, ${content.address.zipCode}`;
+  // const getPrice = () => `${content.price.bottom} - ${content.price.top} EUR`;
+  // const getRating = () =>
+  //   `${content.rating} / 5 (${content.numberVotes} votes)`;
 
   return <div className="restaurant-container"></div>;
 };
