@@ -41,7 +41,7 @@ const Chat = ({userLocation,setRestaurants}) => {
       };
       console.log(requestOptions)
       // return fetch('https://loa-bot.herokuapp.com/v1/message/', requestOptions)
-      return fetch('http://localhost:4000/v1/message/', requestOptions)
+      return fetch('https://loa-bot.herokuapp.com/v1/message/', requestOptions)
   }
 
     const handleBubbles = async () => {

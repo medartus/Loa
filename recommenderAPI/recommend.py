@@ -65,18 +65,19 @@ def toJson(df_business,i):
 
 
 # Recommand function from matrix
-def recommand(message,Q,userid_vectorizer,df_business,N=5):
+def recommand(message,Q,userid_vectorizer,df_business,N=10):
 
   test_df= pd.DataFrame([message], columns=['text'])
   test_df['text'] = test_df['text'].apply(text_process)
   test_vectors = userid_vectorizer.transform(test_df['text'])
   test_v_df = pd.DataFrame(test_vectors.toarray(), index=test_df.index, columns=userid_vectorizer.get_feature_names())
-
+  
   predictItemRating=pd.DataFrame(np.dot(test_v_df.loc[0],Q.T),index=Q.index,columns=['Rating'])
   topRecommendations=pd.DataFrame.sort_values(predictItemRating,['Rating'],ascending=[0])[:N]
 
   result = []
   for i in topRecommendations.index:
-    result.append(toJson(df_business,i))
+    # result.append(toJson(df_business,i))
+    result.append(df_business[df_business['business_id']==i]["business_id"].iloc[0])
   return result
 
