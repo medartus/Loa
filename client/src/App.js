@@ -28,7 +28,7 @@ const App = () => {
   return (
     <div className="app">
       <Chat userLocation={userLocation} setRestaurants={setRestaurants}/>
-      <RestaurantContainer restaurants={restaurants} />
+      <RestaurantContainer loading={loading} restaurants={restaurants} />
     </div>
   );
 };

@@ -20,36 +20,51 @@ router.post('/message', (req, res) => {
     sendMessage(message)
         .then(async data => {
             try {
-                const intent = extractEntity(data,'intent')
+                let intent = extractEntity(data,'intent')
                 const type = extractEntity(data,'type')
                 const location = extractEntity(data,'location')
                 const personalLocation = extractEntity(data,'personalLocation')
-    
+                const desire = extractEntity(data,'desire')
+                // TO IMPROVE
+                // Wit.ai doesn't reconize it
+                if(desire) intent = "Recommend";
+                //
+
+                // Greeting handling
                 if(intent === "Greeting"){
                     const response = request.greetings(intent)
                     res.send(response);
                 }
                 else{
+                    //Location handling
                     let { latitude, longitude } = user.coordinates;
-    
-                    if(personalLocation != 'me'){
+                    if(personalLocation != 'me' && location){
                         await geocode(location).then(({lat,lng})=>{
                             longitude = lng;
                             latitude = lat;
                         })
                     }
-                    
                     const resultLocation = {
-                        "name": personalLocation === 'me' ? "near you" :  "near " + location,
+                        "name": (personalLocation === 'me' || !location) ? "near you" :  "near " + location,
                         "coordinates":{
                             latitude,
                             longitude
                         }
                     }
                     
-                    request.yelpGraphQL(intent,type,resultLocation)
-                    .then(response => res.send(response))
-                    .catch(err => {throw new ErrorHandler(500, err)});
+                    //Recommend API handling
+                    if(intent === "Recommend"){
+                        request.recommend(intent,desire,location)
+                        .then(response => res.send(response))
+                        .catch(err => {throw new ErrorHandler(500, err)});;
+                    }
+                    //Yelp API handling
+                    else{
+                        request.yelpGraphQL(intent,type,resultLocation)
+                        .then(response => res.send(response))
+                        .catch(err => {throw new ErrorHandler(500, err)});
+                    }
+
                 }
             } catch (err) {
                 throw new ErrorHandler(500, err);
