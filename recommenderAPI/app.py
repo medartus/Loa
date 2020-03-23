@@ -16,7 +16,7 @@ df_business = getBusinessDf()
 class Home(Resource):
     def get(self):
         return {
-            "updated": True
+            "ack": True
         }
     
 class Recommend(Resource):
@@ -41,4 +41,4 @@ api.add_resource(Recommend, '/v1/recommend')
 api.add_resource(Home, '/')
 
 if __name__ == "__main__":
-    app.run(port=80)
+    app.run(host='0.0.0.0',port=5000)

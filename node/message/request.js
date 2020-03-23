@@ -35,7 +35,7 @@ const greetings = (intent) => {
 }
 
 const recommend = ( intent, desire, location) => new Promise((resolve,reject) => {
-    axios.post('http://localhost:5000/v1/recommend', {message: desire,})
+    axios.post('http://recommendation:5000/v1/recommend', {message: desire,})
     .then(response => {
         const ids = response.data.data.results
         requestBusinessByIds(ids).then(rep => {
