@@ -41,4 +41,4 @@ api.add_resource(Recommend, '/v1/recommend')
 api.add_resource(Home, '/')
 
 if __name__ == "__main__":
-    app.run(port=80)
+    app.run()

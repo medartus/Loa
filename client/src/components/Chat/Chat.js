@@ -40,7 +40,6 @@ const Chat = ({userLocation,setRestaurants}) => {
         body: JSON.stringify({ message: input, user : { coordinates:userLocation } })
       };
       console.log(requestOptions)
-      // return fetch('https://loa-bot.herokuapp.com/v1/message/', requestOptions)
       return fetch('https://loa-bot.herokuapp.com/v1/message/', requestOptions)
   }
 
