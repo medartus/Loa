@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
 
-from recommend import getBusinessDf, getMatrix, recommand
+from recommend import getMatrix, recommand
 
 # Server initialisation
 app = Flask(__name__)
@@ -9,7 +9,6 @@ api = Api(app)
 parser = reqparse.RequestParser()
 
 # Data initialisation
-df_business = getBusinessDf()
 (Q,userid_vectorizer) = getMatrix()
 
 
@@ -25,7 +24,7 @@ class Recommend(Resource):
         args = parser.parse_args()
         message = args["message"]
 
-        results = recommand(message,Q,userid_vectorizer,df_business)
+        results = recommand(message,Q,userid_vectorizer)
 
         return { 
             "data" : {

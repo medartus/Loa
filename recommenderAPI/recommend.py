@@ -20,8 +20,10 @@ def text_process(mess):
 
 
 # Get business dataframe
+'''
 def getBusinessDf():
     return pd.read_csv('data/yelp_business.csv')
+'''
 
 # Retriving GD results from pkl file
 def getMatrix():
@@ -38,6 +40,7 @@ def getMatrix():
     return (Q,userid_vectorizer)
 
 # Df entry to json
+'''
 def toJson(df_business,i):
     busi = df_business[df_business['business_id']==i]
 
@@ -62,10 +65,10 @@ def toJson(df_business,i):
         "categories":       busi["categories"].iloc[0],
         "hours":            busi["hours"].iloc[0]
     }
-
+'''
 
 # Recommand function from matrix
-def recommand(message,Q,userid_vectorizer,df_business,N=10):
+def recommand(message,Q,userid_vectorizer,N=10):
 
   test_df= pd.DataFrame([message], columns=['text'])
   test_df['text'] = test_df['text'].apply(text_process)
@@ -75,9 +78,6 @@ def recommand(message,Q,userid_vectorizer,df_business,N=10):
   predictItemRating=pd.DataFrame(np.dot(test_v_df.loc[0],Q.T),index=Q.index,columns=['Rating'])
   topRecommendations=pd.DataFrame.sort_values(predictItemRating,['Rating'],ascending=[0])[:N]
 
-  result = []
-  for i in topRecommendations.index:
-    # result.append(toJson(df_business,i))
-    result.append(df_business[df_business['business_id']==i]["business_id"].iloc[0])
+  result = list(topRecommendations.index.values)
   return result
 
