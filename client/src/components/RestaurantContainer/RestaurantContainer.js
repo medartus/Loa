@@ -4,13 +4,24 @@ import "./RestaurantContainer.css";
 import { Restaurant } from "../Restaurant";
 
 const RestaurantContainer = ({ restaurants }) => {
-  const renderRestaurants = () => (
+  const renderRestaurants = () => {
+    
+    const nb = restaurants.length
+    let pairs = []
+    for(let i =0;i<nb-1;i+=2){
+      pairs.push([restaurants[i],restaurants[i+1]])
+    }
+
+    return (
     <>
-      {restaurants.map((r, i) => (
-        <Restaurant key={i} content={r} />
+      {pairs.map((pair, i) => (
+        <div className = "restaurant-line" key = {i}>
+          <Restaurant content={pair[0]} />
+          <Restaurant content={pair[1]} />
+        </div>
       ))}
     </>
-  );
+  )};
   const renderHeader = () => (
     <div className="header-results">
       <p className="header-results-text">RESULTS</p>

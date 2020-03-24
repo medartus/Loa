@@ -7,6 +7,10 @@ const businessInfos = (i,id) => {
       display_phone
       rating
       price
+      review_count
+      categories {
+        title
+      }
       location {
         address1
         city
@@ -39,6 +43,10 @@ const searchQuery = (term, long, lat) => {
         display_phone
         rating
         price
+        review_count
+        categories {
+          title
+        }
         location {
           address1
           city
@@ -65,6 +73,10 @@ const bestQuery = (term, long, lat) => {
         review_count
         rating
         price
+        review_count
+        categories {
+          title
+        }
         location {
           address1
           city

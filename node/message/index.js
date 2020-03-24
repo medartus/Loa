@@ -25,13 +25,14 @@ router.post('/message', (req, res) => {
                 const location = extractEntity(data,'location')
                 const personalLocation = extractEntity(data,'personalLocation')
                 const desire = extractEntity(data,'desire')
-                // TO IMPROVE
-                // Wit.ai doesn't reconize it
-                if(desire) intent = "Recommend";
-                //
 
+                // Greeting misunderstanding
+                if(!intent){
+                    const response = request.misunderstanding()
+                    res.send(response);
+                }
                 // Greeting handling
-                if(intent === "Greeting"){
+                else if(intent === "Greeting"){
                     const response = request.greetings(intent)
                     res.send(response);
                 }

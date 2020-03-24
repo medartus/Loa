@@ -1,5 +1,5 @@
 .chat-container {
-  flex: 4;
+  width: 45vw;
   height: 100vh;
   box-shadow: 10px 0 50px #333;
   display: flex;

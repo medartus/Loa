@@ -15,12 +15,17 @@ const generateResponse = (intent,type,location,message,results) =>{
 }
 
 const requestBusinessByIds = (ids) => new Promise((resolve,reject) => {
-    // ids = ["1SWheh84yJXfytovILXOAQ","QXAEGFB4oINsVuTFxEYKFQ","gnKjwL_1w79qoiV3IC_xQQ"]
     const query = businessQuery(ids)
     graphqlQuery(query).then(data => { 
         resolve(data)
     }).catch(e => reject(e))
 })
+
+const misunderstanding = () => {
+    const message = "Oops, I didn't understand you, can you reformulate?"
+    const response = generateResponse(null,null,null,message,null);
+    return response;
+}
 
 const greetings = (intent) => {
 
@@ -35,6 +40,7 @@ const greetings = (intent) => {
 }
 
 const recommend = ( intent, desire, location) => new Promise((resolve,reject) => {
+    if(!desire) desire = "restaurant"
     axios.post('https://loa-recommend.herokuapp.com/v1/recommend', {message: desire})
     .then(response => {
         const ids = response.data.data.results
@@ -42,16 +48,17 @@ const recommend = ( intent, desire, location) => new Promise((resolve,reject) =>
             results = []
             for (let i = 0; i < ids.length;i++){
                 const business = rep[`b${i}`]
+                console.log(business['categories'])
                 results.push(business)
             }
-            console.log(results)
+            
             message = `Oh, ${desire} is a good idea! Let me recommend you these restaurants.`
             rep = generateResponse(intent,desire,location,message,results)
             resolve(rep)
         })
-        .catch(err => error => reject(error));
+        .catch(err => reject(err));
     })
-    .catch(error => reject(error));
+    .catch(error => console.log(error));
 })
 
 
@@ -135,4 +142,4 @@ const yelpGraphQL = (intent,type,location) => new Promise((resolve,reject)=>{
 
 
 
-module.exports = { requestBusinessByIds, greetings, recommend, yelpGraphQL };
+module.exports = { requestBusinessByIds, greetings, misunderstanding, recommend, yelpGraphQL };
