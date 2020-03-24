@@ -48,9 +48,10 @@ const greetings = intent => {
 const recommend = (intent, desire, location) =>
   new Promise((resolve, reject) => {
     if (!desire) desire = "restaurant";
-    console.log("here");
     axios
-      .post("http://recommend:5000/v1/recommender", { message: desire })
+      .post("https://loa-recommend.herokuapp.com/v1/recommend", {
+        message: desire
+      })
       .then(response => {
         const ids = response.data.data.results;
         requestBusinessByIds(ids)

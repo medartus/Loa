@@ -5,7 +5,6 @@ import string
 import json
 from nltk.corpus import stopwords 
 
-
 # Process stop words
 def text_process(mess):
 

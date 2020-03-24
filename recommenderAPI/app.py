@@ -9,7 +9,11 @@ api = Api(app)
 parser = reqparse.RequestParser()
 
 # Data initialisation
+<< << << < HEAD
 (Q, userid_vectorizer) = getMatrix()
+== == == =
+(Q, userid_vectorizer) = getMatrix()
+>>>>>> > c8aee4d1ff3b9d3b98b76398f4de0342bc491587
 
 
 class Home(Resource):
@@ -17,6 +21,14 @@ class Home(Resource):
         return {
             "updated": True
         }
+
+
+<< << << < HEAD
+
+
+== == == =
+
+>>>>>> > c8aee4d1ff3b9d3b98b76398f4de0342bc491587
 
 
 class Recommend(Resource):

@@ -1,5 +1,6 @@
 import React from "react";
 import "./Restaurant.css";
+
 import Tilt from "react-tilt";
 
 import Skeleton from "react-loading-skeleton";
