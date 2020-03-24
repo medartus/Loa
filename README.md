@@ -157,8 +157,6 @@ Type of Question :
 - Can you **show** me the **restaurants** **around me** ?
 - Can you **show** me the **restaurants** in **Los Angeles** ?
 - **Map** of **restaurants** in **Paris**.
-  <!-- * What are the **most rated** **restaurants** in **Los Angeles** ?
-- Which **restaurants** are open **around me** ? -->
 
 #### Example
 
@@ -583,3 +581,5 @@ Gathering all of these steps, our API will return :
 <a name="testing"/>
 
 ## 🏃‍♀️ Testing
+
+TO DO

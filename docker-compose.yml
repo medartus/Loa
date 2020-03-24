@@ -1,0 +1,22 @@
+version: "2"
+services:
+  node:
+    build:
+      context: ./node/
+    ports:
+      - "8080:8080"
+  recommender:
+    build:
+      context: ./recommenderAPI/
+    ports:
+      - "5000:5000"
+  client:
+    build:
+      context: ./client/
+    command: npm start
+    depends_on:
+      - node
+    links:
+      - node
+    ports:
+      - "3000:3000"

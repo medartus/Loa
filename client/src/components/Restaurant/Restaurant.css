@@ -1,3 +1,138 @@
 p {
   margin: 0;
 }
+
+.restaurant-element {
+  width: 100%;
+  background-color: #f2f2f2;
+  border-radius: 25px;
+  box-shadow: 5px 5px 20px 5px #cccccc;
+  transition: all ease-in-out 0.2s;
+  cursor: pointer;
+  height: 100%;
+}
+
+.restaurant-element:hover {
+  box-shadow: 5px 5px 40px 10px #aaaaaa;
+}
+
+.element-top {
+  display: flex;
+  flex-direction: row;
+  border-radius: 25px 25px 0px 0px;
+  height: 60%;
+}
+
+.element-image {
+  border-radius: 25px 0px 0px 0px;
+  min-height: 100%;
+  width: 45%;
+  object-fit: cover;
+}
+
+.element-infos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0px 25px 0px 0px;
+  height: 100%;
+  width: 55%;
+  background-color: #fff7f3;
+}
+.rating,
+.votes,
+.price,
+.price-feedback,
+.city {
+  font-size: 1em;
+}
+.rating,
+.price {
+  margin-right: 1%;
+ 
+}
+.votes,
+.city,
+.price-feedback {
+  margin-left: 10%;
+
+}
+.info-container {
+  justify-content: left;
+  align-items: center;
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+.price {
+  font-size: 1.1em;
+  font-weight: 500;
+  color: #4949e7;
+}
+
+.element-bottom {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  border-radius: 0px 0px 25px 25px;
+  height: 40%;
+}
+
+.element-main-info {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  border-radius: 0px 0px 0px 25px;
+  height: 100%;
+  width: 75%;
+}
+.name,
+.categories {
+  margin: 0% 0% 0% 5%;
+}
+.name {
+  font-size: 1.3em;
+  font-family: "Volkhov";
+  font-weight: bold;
+}
+.categories {
+  color: rgb(121, 121, 121);
+}
+
+.element-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 25%;
+  border-radius: 0px 0px 25px 0px;
+}
+.more-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 50%;
+  border-radius: 25px;
+  text-decoration: none;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #4949e7;
+  transition: all ease-in-out 0.2s;
+}
+.more-text {
+  font-size: 0.9em;
+  color: #4949e7;
+  transition: all ease-in-out 0.2s;
+}
+
+.more-button:hover {
+  background-color: #4949e7;
+}
+
+.more-button:hover .more-text {
+  color: white;
+}

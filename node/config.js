@@ -1,9 +1,12 @@
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 
-const result = dotenv.config({ path: './.env'});
+let envs = process.env;
+
+const result = dotenv.config({ path: "./.env" });
 if (result.error) {
   throw result.error;
 }
-const { parsed: envs } = result;
+envs = result.parsed;
+envs.PORT = 8080;
 
 module.exports = envs;

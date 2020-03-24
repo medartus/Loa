@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon servers.js"
+    "start": "node server.js",
+    "dev": "set ENVIRONMENT=dev& nodemon server.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,5 +18,6 @@
     "express": "^4.17.1",
     "graphql-request": "^1.8.2",
     "node-wit": "^5.0.0"
-  }
+  },
+  "proxy": "http://recommender:5000"
 }

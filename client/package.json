@@ -13,14 +13,19 @@
     "react-icons": "^3.9.0",
     "react-loading-skeleton": "^2.0.1",
     "react-map-gl": "^5.2.3",
-    "react-scripts": "3.3.0",
-    "react-select": "^3.0.8"
+    "react-scripts": "^3.4.0",
+    "react-select": "^3.0.8",
+    "react-tilt": "^0.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "preinstall": "npx npm-force-resolutions"
+  },
+  "resolutions": {
+    "@babel/preset-env": "^7.8.7"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,5 +42,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://server:5000"
+  "proxy": "http://node:8080"
 }

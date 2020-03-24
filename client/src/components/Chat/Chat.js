@@ -5,22 +5,14 @@ import { IoMdSend } from "react-icons/io";
 import ResizableTextarea from "../ResizableTextarea";
 import Bubble from "../Bubble";
 
-import axios from "axios";
+// import axios from "axios";
 
 import logo from "../../assets/logo.png";
-import { BOT, USER, THINKING, BOT_WRITE_TIME } from "../../Constants";
+import { BOT, USER, THINKING, INIT_BUBBLES } from "../../Constants";
 
-const testBubbles = [
-  {
-    type: BOT,
-    message:
-      "Hi, I'm Loa, a new friend of yours that will help you choose among thousands of restaurants in the US! 🤤"
-  }
-];
-
-const Chat = () => {
+const Chat = ({ userLocation, setRestaurants, setLoading, loading }) => {
   const [inputValue, setInputValue] = useState("");
-  const [bubbles, setBubbles] = useState(testBubbles);
+  const [bubbles, setBubbles] = useState(INIT_BUBBLES);
   const [shouldSend, setShouldSend] = useState(false);
   const [botResponse, setBotResponse] = useState(null);
 
@@ -32,20 +24,39 @@ const Chat = () => {
   }, [shouldSend]);
 
   useEffect(() => {
-    const handleBubbles = async () => {
-      if (bubbles.length > 1) {
-        const { type } = bubbles[0];
-        console.log(type);
-        // user has sent last message, we stop thinking the previous ones ane push thinking to last
-        if (type === THINKING) {
-          const prevMessage = bubbles[1];
-          // const resp = await(bot, prevMessage)
-          await new Promise(resolve => setTimeout(resolve, BOT_WRITE_TIME));
-          setBotResponse("true");
-        }
-      }
+    const callApi = input => {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: input,
+          user: { coordinates: userLocation }
+        })
+      };
+      return fetch("/v1/message/", requestOptions);
     };
-    handleBubbles();
+
+    if (loading && userLocation !== null) {
+      const input = inputValue.substr(0, inputValue.length - 1); // Remove '\n' caracter at the end
+      setInputValue("");
+      callApi(input)
+        .then(response => response.json())
+        .then(data => {
+          const results = data.results !== null ? data.results : [];
+          setBotResponse(data.message);
+          setRestaurants(results);
+          setLoading(false);
+        })
+        .catch(e => console.log(e));
+    }
+  }, [loading]);
+
+  useEffect(() => {
+    if (bubbles.length > 1) {
+      const { type } = bubbles[0];
+      // user has sent last message, we stop thinking the previous ones ane push thinking to last
+      if (type === THINKING) setLoading(true);
+    }
   }, [bubbles]);
 
   useEffect(() => {
@@ -65,7 +76,6 @@ const Chat = () => {
       ...bubbles.filter(b => b.type !== THINKING)
     ]);
     setShouldSend(false);
-    setInputValue("");
   };
 
   const renderHeader = () => (
