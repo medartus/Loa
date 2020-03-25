@@ -24,21 +24,6 @@ p {
 }
 
 .element-image {
-  width: 45%;
-  background-color: #F2F2F2;
-  border-radius: 25px;
-  box-shadow: 1px 1px 5px 5px #cccccc;
-}
-
-
-.element-top{
-  display: flex;
-  flex-direction: row;
-  border-radius: 25px 25px 0px 0px;
-  height: 13vh;
-}
-
-.element-image{
   border-radius: 25px 0px 0px 0px;
   min-height: 100%;
   width: 45%;
@@ -66,25 +51,30 @@ p {
 .rating,
 .price {
   margin-right: 1%;
- 
 }
 .votes,
 .city,
 .price-feedback {
   margin-left: 10%;
-
 }
 
-.rating, .votes, .price, .price-feedback, .city{
+.rating,
+.votes,
+.price,
+.price-feedback,
+.city {
   font-size: 1em;
 }
-.rating, .price{
+.rating,
+.price {
   margin-right: 1%;
 }
-.votes, .city, .price-feedback{
+.votes,
+.city,
+.price-feedback {
   margin-left: 1%;
 }
-.info-container{
+.info-container {
   justify-content: left;
   align-items: center;
   width: 80%;
@@ -93,13 +83,13 @@ p {
   margin-bottom: 10px;
 }
 
-.price{
+.price {
   font-size: 1.1em;
   font-weight: 500;
   color: #4949e7;
 }
 
-.element-bottom{
+.element-bottom {
   display: flex;
   flex-direction: row;
   background-color: white;
@@ -107,7 +97,7 @@ p {
   height: 40%;
 }
 
-.element-main-info{
+.element-main-info {
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -138,12 +128,12 @@ p {
   width: 25%;
   border-radius: 0px 0px 25px 0px;
 }
-.more-button{
+.more-button {
   display: flex;
   justify-content: center;
   align-items: center;
   /* background-color: #4949e7; */
-  width:80%;
+  width: 80%;
   height: 50%;
   border-radius: 25px;
   text-decoration: none;
