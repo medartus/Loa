@@ -47,7 +47,7 @@ const greetings = intent => {
 
 const recommend = (intent, desire, location) => new Promise((resolve, reject) => {
   if (!desire) desire = "restaurant";
-  axios.post("/recommender/v1/recommend", {
+  axios.post("http://recommender:5000/recommender/v1/recommend/", {
     message: desire
   }).then(response => {
     const ids = response.data.data.results;

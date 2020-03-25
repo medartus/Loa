@@ -14,12 +14,12 @@ app.use(cors());
 
 app.options('*', cors());
 
-app.get('/', (request, response) => {
+app.get('/api/', (request, response) => {
   response.send('Api works');
 });
 
 const messageController = require('./message');
-app.use('/v1', messageController);
+app.use('/api/v1', messageController);
 
 app.use((err, req, res, next) => {
   handleError(err, res);

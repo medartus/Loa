@@ -27,12 +27,12 @@ services:
     # command: npm start
     restart: always
     volumes:
-      - ./client:/usr/src/app
+      - ./client:/app/src
     depends_on:
       - node
     links:
-      - node    
+      - node       
     expose:
       - 80
     ports:
-      - "80:3000"
+      - "80:80"

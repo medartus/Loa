@@ -35,8 +35,8 @@ class Recommend(Resource):
         }
 
 
-api.add_resource(Recommend, '/v1/recommend')
-api.add_resource(Home, '/')
+api.add_resource(Recommend, '/recommender/v1/recommend/')
+api.add_resource(Home, '/recommender/')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
