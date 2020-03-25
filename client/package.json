@@ -42,5 +42,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://node:8080"
+  "proxy": "http://node:8080",
+  "devDependencies": {
+    "npm-force-resolutions": "0.0.3"
+  }
 }

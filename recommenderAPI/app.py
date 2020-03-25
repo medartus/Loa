@@ -9,11 +9,7 @@ api = Api(app)
 parser = reqparse.RequestParser()
 
 # Data initialisation
-<< << << < HEAD
 (Q, userid_vectorizer) = getMatrix()
-== == == =
-(Q, userid_vectorizer) = getMatrix()
->>>>>> > c8aee4d1ff3b9d3b98b76398f4de0342bc491587
 
 
 class Home(Resource):
@@ -21,14 +17,6 @@ class Home(Resource):
         return {
             "updated": True
         }
-
-
-<< << << < HEAD
-
-
-== == == =
-
->>>>>> > c8aee4d1ff3b9d3b98b76398f4de0342bc491587
 
 
 class Recommend(Resource):
@@ -51,4 +39,4 @@ api.add_resource(Recommend, '/v1/recommend')
 api.add_resource(Home, '/')
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0")
+    app.run(host="0.0.0.0")

@@ -8,7 +8,7 @@ RUN npm install --quiet
 
 # copy files
 COPY . .
-EXPOSE 8080
+EXPOSE 4000
 
 # start dev server
 CMD ["npm", "start"]

@@ -45,36 +45,31 @@ const greetings = intent => {
   return response;
 };
 
-const recommend = (intent, desire, location) =>
-  new Promise((resolve, reject) => {
-    if (!desire) desire = "restaurant";
-    axios
-      .post("https://loa-recommend.herokuapp.com/v1/recommend", {
-        message: desire
-      })
-      .then(response => {
-        const ids = response.data.data.results;
-        requestBusinessByIds(ids)
-          .then(rep => {
-            results = [];
-            for (let i = 0; i < ids.length; i++) {
-              const business = rep[`b${i}`];
-              console.log(business["categories"]);
-              results.push(business);
-            }
+const recommend = (intent, desire, location) => new Promise((resolve, reject) => {
+  if (!desire) desire = "restaurant";
+  axios.post("/recommender/v1/recommend", {
+    message: desire
+  }).then(response => {
+    const ids = response.data.data.results;
+    requestBusinessByIds(ids)
+      .then(rep => {
+        results = [];
+        for (let i = 0; i < ids.length; i++) {
+          const business = rep[`b${i}`];
+          // console.log(business["categories"]);
+          results.push(business);
+        }
 
-            message = `Oh, ${desire} is a good idea! Let me recommend you these restaurants.`;
-            rep = generateResponse(intent, desire, location, message, results);
-            resolve(rep);
-          })
-          .catch(err => reject(err));
-      })
-      .catch(error => console.log(error));
-  });
+        message = `Oh, ${desire} is a good idea! Let me recommend you these restaurants.`;
+        rep = generateResponse(intent, desire, location, message, results);
+        resolve(rep);
+      }).catch(err => reject(err));
+  }).catch(error => reject(error));
+});
 
 const search = (intent, type, data, location) => {
   const results = data.search.business;
-  const message = `You can find a map of ${type} ${location.name}.`;
+  const message = `You can find a list of ${type} ${location.name}.`;
   const response = generateResponse(intent, type, location, message, results);
 
   return response;
