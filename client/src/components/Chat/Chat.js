@@ -24,7 +24,9 @@ const Chat = ({ userLocation, setRestaurants, setLoading, loading }) => {
   }, [shouldSend]);
 
   useEffect(() => {
+
     const callApi = input => {
+
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -48,6 +50,11 @@ const Chat = ({ userLocation, setRestaurants, setLoading, loading }) => {
           setLoading(false);
         })
         .catch(e => console.log(e));
+    }
+    else if (inputValue != "" && userLocation === null){
+      setBotResponse("Oh, I can't access your location. Please allow me to access it so I can help you.");
+      setInputValue("");
+      setLoading(false)
     }
   }, [loading]);
 
