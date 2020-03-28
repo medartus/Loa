@@ -5,6 +5,8 @@ const { ErrorHandler } = require('../helpers/error');
 const request = require('./request');
 const { geocode } = require('../api/maps');
 
+const quickResponse = ["Greeting","Thanks", "Example","Goodbye","Misunderstanding"]
+
 router.post('/message', (req, res) => {
     
     res.header("Access-Control-Allow-Origin", "*");
@@ -26,14 +28,14 @@ router.post('/message', (req, res) => {
                 const personalLocation = extractEntity(data,'personalLocation')
                 const desire = extractEntity(data,'desire')
 
-                // Greeting misunderstanding
+                // Intent misunderstanding
                 if(!intent){
-                    const response = request.misunderstanding()
+                    const response = request.quickResponse("Misunderstanding")
                     res.send(response);
                 }
                 // Greeting handling
-                else if(intent === "Greeting"){
-                    const response = request.greetings(intent)
+                else if(quickResponse.includes(intent)){
+                    const response = request.quickResponse(intent)
                     res.send(response);
                 }
                 else{

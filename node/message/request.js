@@ -6,9 +6,31 @@ const {
   bestQuery,
   howManyQuery
 } = require("./query");
-const textualResponse = require("../response/response.json");
+
+const textualResponse = require("../response/text.json");
+const gifResponse = require("../response/gif.json");
+
+const generatgif = (intent) => {
+  const answer = gifResponse[intent.toLowerCase()];
+  const index = Math.floor(Math.random() * answer.length);
+  const gif = answer[index];
+};
+
 
 const generateResponse = (intent, type, location, message, results) => {
+  if (message != null) {
+    const gif = generatgif(intent)
+    message = [
+      {
+        "type" : "text",
+        "content" : message
+      },
+      {
+        "type" : "gif",
+        "content" : gif
+      },
+    ]
+  }
   let response = {
     intent,
     type,
@@ -27,18 +49,12 @@ const requestBusinessByIds = ids =>
         resolve(data);
       })
       .catch(e => reject(e));
-  });
+});
 
-const misunderstanding = () => {
-  const message = "Oops, I didn't understand you, can you reformulate?";
-  const response = generateResponse(null, null, null, message, null);
-  return response;
-};
-
-const greetings = intent => {
-  const greetingsResponse = textualResponse["greetings"];
-  const index = Math.floor(Math.random() * greetingsResponse.length);
-  const message = greetingsResponse[index];
+const quickResponse = intent => {
+  const answer = textualResponse[intent.toLowerCase()];
+  const index = Math.floor(Math.random() * answer.length);
+  const message = answer[index];
 
   const response = generateResponse(intent, null, null, message, null);
 
@@ -151,8 +167,7 @@ const yelpGraphQL = (intent, type, location) =>
 
 module.exports = {
   requestBusinessByIds,
-  greetings,
-  misunderstanding,
+  quickResponse,
   recommend,
   yelpGraphQL
 };
