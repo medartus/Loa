@@ -38,7 +38,7 @@ const Chat = ({ userLocation, setRestaurants, setLoading, loading }) => {
           user: { coordinates: userLocation }
         })
       };
-      return fetch("/v1/message/", requestOptions);
+      return fetch("http://localhost:4000/v1/message/", requestOptions);
     };
 
     if (loading && userLocation !== null) {
