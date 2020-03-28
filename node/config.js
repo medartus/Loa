@@ -7,6 +7,5 @@ if (result.error) {
   throw result.error;
 }
 envs = result.parsed;
-envs.PORT = 8080;
 
 module.exports = envs;
