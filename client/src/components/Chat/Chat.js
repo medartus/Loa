@@ -10,6 +10,11 @@ import Bubble from "../Bubble";
 import logo from "../../assets/logo.png";
 import { BOT, USER, THINKING, INIT_BUBBLES } from "../../Constants";
 
+const NO_LOCATION_MESSAGE =
+  "Oh, I can't access your location. Please allow me to access it so I can help you.";
+const ICON_COLOR = "#4949e7";
+const ICON_SIZE = 32;
+
 const Chat = ({ userLocation, setRestaurants, setLoading, loading }) => {
   const [inputValue, setInputValue] = useState("");
   const [bubbles, setBubbles] = useState(INIT_BUBBLES);
@@ -24,9 +29,7 @@ const Chat = ({ userLocation, setRestaurants, setLoading, loading }) => {
   }, [shouldSend]);
 
   useEffect(() => {
-
     const callApi = input => {
-
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -50,11 +53,10 @@ const Chat = ({ userLocation, setRestaurants, setLoading, loading }) => {
           setLoading(false);
         })
         .catch(e => console.log(e));
-    }
-    else if (inputValue != "" && userLocation === null){
-      setBotResponse("Oh, I can't access your location. Please allow me to access it so I can help you.");
+    } else if (inputValue !== "" && userLocation === null) {
+      setBotResponse(NO_LOCATION_MESSAGE);
       setInputValue("");
-      setLoading(false)
+      setLoading(false);
     }
   }, [loading]);
 
@@ -110,8 +112,8 @@ const Chat = ({ userLocation, setRestaurants, setLoading, loading }) => {
       <IoMdSend
         className="send-logo"
         onClick={() => handleSend()}
-        color="#4949e7"
-        size={32}
+        color={ICON_COLOR}
+        size={ICON_SIZE}
       />
     </div>
   );
