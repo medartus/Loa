@@ -17,16 +17,32 @@ const generateGif = intent => {
   return gif;
 };
 
+const getGifProbability = intent =>{
+  switch(intent){
+    case "Greeting":
+    case "Goodbye":
+    case "Thanks":
+      return 1.0
+    case "Number":
+      return 0.5
+    default:
+      return 0.3
+  }
+}
+
 const generateResponse = (intent, type, location, message, results) => {
   if (message !== null) {
     message = [{ type: "text", content: message }];
-    // generate gif with a probability of 0.5
-    const rnd = Math.floor(Math.random() * 2);
-    if (rnd === 1)
+
+    const rnd = Math.random();
+    const gifProba = getGifProbability(intent);
+
+    if (rnd <= gifProba){
       message.unshift({
         type: "gif",
         content: generateGif(intent)
       });
+    }
   }
   return {
     intent,

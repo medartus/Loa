@@ -39,10 +39,10 @@ router.post("/message", (req, res) => {
         // Intent misunderstanding
         if (!intent) {
           // if not a question, we reply with converation
-          let response;
-          if (!message.includes("?"))
-            response = request.quickResponse("Conversation");
-          else response = request.quickResponse("Misunderstanding");
+          let response = request.quickResponse("Misunderstanding");
+          // if (!message.includes("?"))
+          //   response = request.quickResponse("Conversation");
+          // else response = request.quickResponse("Misunderstanding");
           res.send(response);
         }
         // Greeting handling
