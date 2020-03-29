@@ -1,22 +1,51 @@
 {
-    "greetings":[
-        "Hi, what's can I do four you today ?",
-        "Hello ! How can I help you ?"
-    ],
-    "thanks":[
-        "Your welcome ! Do you need something else ?",
-        "Don't worry, I'm very happy to help you ! Need more help ?"
-    ],
-    "goodbye":[
-        "I was a pleasure to help you, goodbye !",
-        "Bye ! I hope to see you soon to recommend you new restaurants !"
-    ],
-    "example":[
-        "I can give you some examples: \n   - Can you show me the restaurants around me ?\n    - What is the best restaurant in New York ?\n    - What is the number of restaurants in Colorado ?\n    - Can you recommend me a restaurant with an awesome view ?",
-        "Here's some examples: - Can you recommend me an italian restaurant ?\n     - What is the number of restaurants in Seattle ?   - Can you show me the restaurants around me ?\n   - What is the best restaurant in Los Angeles ?\n"
-    ],
-    "misunderstanding":[
-        "Oops, I didn't understand, can you reformulate?",
-        "Sorry, can you reformulate ?"
-    ]
+  "greeting": [
+    "Hi, what's can I do for you today ? 👩",
+    "Hello there, I am ready to help  you! 🦾",
+    "Hello ! How can I help you ? 🦹‍♀️"
+  ],
+  "thanks": [
+    "You're welcome ! Do you need something else ?",
+    "Don't worry, I'm very happy to help you ! 🤗 Need more help ?",
+    "No problemo amigo, what else ? 😏"
+  ],
+  "goodbye": [
+    "I was a pleasure to help you, goodbye ! 😀",
+    "Bye ! I hope to see you soon to recommend you new restaurants ! 👋",
+    "Goodbye, but come back soon ! 🔜"
+  ],
+  "example": [
+    "I can give you some examples: \n   - Can you show me the restaurants around me ?\n    - What is the best restaurant in New York ?\n    - What is the number of restaurants in Colorado ?\n    - Can you recommend me a restaurant with an awesome view ?",
+    "Here's some examples: 📝 - Can you recommend me an italian restaurant ?\n     - What is the number of restaurants in Seattle ?   - Can you show me the restaurants around me ?\n   - What is the best restaurant in Los Angeles ?\n"
+  ],
+  "misunderstanding": [
+    "Oops, I didn't understand, can you reformulate? 🙃",
+    "Oh I don't get your point, try again ! 👻",
+    "Sorry, can you reformulate ? 😞"
+  ],
+  "conversation": [
+    "Haha yeah ! 😎",
+    "I find it pretty cool 🤓",
+    "Awesome ! I share your opinion 🧐"
+  ],
+  "recommend": [
+    "Oh, # is a good idea! Let me recommend you these restaurants. 🔮",
+    "I love #, here is my suggestion ! 💗",
+    "# ! Wow that is nice, please help youself ! 🏄‍♀️"
+  ],
+  "number": [
+    "There are # # #. ⏲️",
+    "# # # ! #️⃣ Well, it's impossible to just invent that number, right ? ",
+    "The most accurate data I found is # # #, pretty impressive huh ! 🤩"
+  ],
+  "best": [
+    "The best # # is #. 💯",
+    "Oh, you want the cream of the crop. 🍦 Well the cream of # # is # !",
+    "Of course, I am here for the best you can find. The top # # is #. 🔎"
+  ],
+  "search": [
+    "You can find a selection of # #. 🏨",
+    "With pleasure, here are # # ! 😘",
+    "I searched everywhere I could, I swear ! 👓 Let me show you # #."
+  ]
 }

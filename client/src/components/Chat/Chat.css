@@ -1,7 +1,7 @@
 .chat-container {
   width: 45vw;
   height: 100vh;
-  box-shadow: 10px 0 50px #333;
+  box-shadow: 10px 0 50px rgba(0, 0, 0, 0.33);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -16,7 +16,6 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  border-bottom: solid 2px #c2c2c2;
   background-color: #fff7f3;
   z-index: 2;
 }

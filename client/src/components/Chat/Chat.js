@@ -21,6 +21,15 @@ const Chat = ({ userLocation, setRestaurants, setLoading, loading }) => {
   const [shouldSend, setShouldSend] = useState(false);
   const [botResponse, setBotResponse] = useState(null);
 
+  const handleSend = async () => {
+    setBubbles([
+      { type: THINKING, content: null, bubbleType: "text" },
+      { type: USER, content: inputValue, bubbleType: "text" },
+      ...bubbles.filter(b => b.type !== THINKING)
+    ]);
+    setShouldSend(false);
+  };
+
   useEffect(() => {
     const send = async () => {
       if (shouldSend) await handleSend();
@@ -38,7 +47,7 @@ const Chat = ({ userLocation, setRestaurants, setLoading, loading }) => {
           user: { coordinates: userLocation }
         })
       };
-      return fetch("http://localhost:4000/v1/message/", requestOptions);
+      return fetch("/v1/message/", requestOptions);
     };
 
     if (loading && userLocation !== null) {
@@ -54,11 +63,13 @@ const Chat = ({ userLocation, setRestaurants, setLoading, loading }) => {
         })
         .catch(e => console.log(e));
     } else if (inputValue !== "" && userLocation === null) {
-      setBotResponse(NO_LOCATION_MESSAGE);
+      setBotResponse([
+        { type: BOT, bubbleType: "text", content: NO_LOCATION_MESSAGE }
+      ]);
       setInputValue("");
       setLoading(false);
     }
-  }, [loading]);
+  }, [loading, setLoading, setRestaurants]);
 
   useEffect(() => {
     if (bubbles.length > 1) {
@@ -66,26 +77,20 @@ const Chat = ({ userLocation, setRestaurants, setLoading, loading }) => {
       // user has sent last message, we stop thinking the previous ones ane push thinking to last
       if (type === THINKING) setLoading(true);
     }
-  }, [bubbles]);
+  }, [bubbles, setLoading]);
 
   useEffect(() => {
     if (botResponse !== null) {
-      setBubbles([
-        { type: BOT, message: botResponse },
-        ...bubbles.filter(b => b.type !== THINKING)
-      ]);
+      let newBubbles = botResponse.map(b => ({
+        type: BOT,
+        bubbleType: b.type,
+        content: b.content
+      }));
+      newBubbles.push(...bubbles.filter(b => b.type !== THINKING));
+      setBubbles(newBubbles);
       setBotResponse(null);
     }
   }, [botResponse]);
-
-  const handleSend = async () => {
-    setBubbles([
-      { type: THINKING, message: null },
-      { type: USER, message: inputValue },
-      ...bubbles.filter(b => b.type !== THINKING)
-    ]);
-    setShouldSend(false);
-  };
 
   const renderHeader = () => (
     <div className="header-chat">

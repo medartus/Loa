@@ -14,7 +14,7 @@
     "react-loading-skeleton": "^2.0.1",
     "react-map-gl": "^5.2.3",
     "react-scripts": "^3.4.0",
-    "react-select": "^3.0.8",
+    "react-select": "^3.1.0",
     "react-tilt": "^0.1.4"
   },
   "scripts": {
@@ -42,5 +42,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://node:8080"
+  "proxy": "http://localhost:8080"
 }

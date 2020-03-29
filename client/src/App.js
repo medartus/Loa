@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import { RestaurantContainer, Chat } from "./components";
+import { defaultFilters, getSorted } from "./Constants";
 
 const App = () => {
   const [userLocation, setUserLocation] = useState(null);
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState(defaultFilters);
 
   useEffect(() => {
     localizeUser();
@@ -15,20 +17,19 @@ const App = () => {
     setLoading(false);
   }, [restaurants]);
 
+  useEffect(() => {
+    const sortedRestaurants = getSorted(filters, restaurants, userLocation);
+    setRestaurants(sortedRestaurants);
+  }, [filters, userLocation]);
+
   const localizeUser = () => {
-    // only works on HTTPS
-    // navigator.geolocation.getCurrentPosition(position => {
-    //   const userLocation = {
-    //     latitude: position.coords.latitude,
-    //     longitude: position.coords.longitude
-    //   };
-    //   setUserLocation(userLocation);
-    // });
-    const userLocation = {
-      latitude: 48.90655,
-      longitude: 2.26636
-    };
-    setUserLocation(userLocation);
+    navigator.geolocation.getCurrentPosition(position => {
+      const userLocation = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      };
+      setUserLocation(userLocation);
+    });
   };
 
   return (
@@ -38,8 +39,15 @@ const App = () => {
         setRestaurants={setRestaurants}
         setLoading={setLoading}
         loading={loading}
+        filters={filters}
       />
-      <RestaurantContainer loading={loading} restaurants={restaurants} />
+      <RestaurantContainer
+        loading={loading}
+        restaurants={restaurants}
+        filters={filters}
+        setFilters={setFilters}
+        userLocation={userLocation}
+      />
     </div>
   );
 };

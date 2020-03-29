@@ -17,7 +17,14 @@
   height: 8px;
   width: 8px;
   border-radius: 50%;
-  background-color: #c4c4c4;
+  background-color: #999;
+}
+
+.gif-img {
+  width: 25vw;
+  height: auto;
+  border-radius: 20px;
+  margin-left: -10px;
 }
 
 .t1 {

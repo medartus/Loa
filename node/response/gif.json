@@ -1,26 +1,46 @@
 {
-    "greetings":[
-        ""
-    ],
-    "thanks":[
-        ""
-    ],
-    "goodbye":[
-        ""
-    ],
-    "example":[
-        ""
-    ],
-    "recommend":[
-        ""
-    ],
-    "number":[
-        ""
-    ],
-    "best":[
-        ""
-    ],
-    "Search":[
-        ""
-    ]
+  "greeting": [
+    "https://media.giphy.com/media/14aa5GbbHT3bHO/source.gif",
+    "https://media.giphy.com/media/Vbtc9VG51NtzT1Qnv1/source.gif",
+    "https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif"
+  ],
+  "thanks": [
+    "https://media.giphy.com/media/LrQkEUJ3s8hLmO9fGH/source.gif",
+    "https://media.giphy.com/media/6wnHmwYZtwH8K27OTg/source.gif",
+    "https://media.giphy.com/media/3oKIPEh5Lk3RGSIFEI/source.gif"
+  ],
+  "misunderstanding": [
+    "https://media.giphy.com/media/SXTAjlim2UiugH9CIg/source.gif",
+    "https://media.giphy.com/media/EsmlrgWNx5v0Y/giphy.gif",
+    "https://media.giphy.com/media/fMvvwdTWamlA4/source.gif"
+  ],
+  "goodbye": [
+    "https://media.giphy.com/media/ZA5DTtqkU8bQDHuu16/source.gif",
+    "https://media.giphy.com/media/UrcXN0zTfzTPi/source.gif",
+    "https://media.giphy.com/media/3ohhwlR8bBxEOqFxIY/source.gif"
+  ],
+  "example": ["https://media.giphy.com/media/szeVLlECC8ThC/source.gif"],
+  "recommend": [
+    "https://media.giphy.com/media/7JzHsh3UTip20/source.gif",
+    "https://media.giphy.com/media/eSQKNSmg07dHq/source.gif"
+  ],
+  "number": [
+    "https://media.giphy.com/media/YP2ZEDOspSIIeWpeDg/source.gif",
+    "https://media.giphy.com/media/IPbS5R4fSUl5S/source.gif"
+  ],
+  "best": [
+    "https://media.giphy.com/media/l0NwKAlZzZ9pyi9fa/source.gif",
+    "https://media.giphy.com/media/F0uvYzyr2a7Li/source.gif",
+    "https://media.giphy.com/media/6aNtqYlTFb6X6/source.gif"
+  ],
+  "search": [
+    "https://media.giphy.com/media/xGdvlOVSWaDvi/source.gif",
+    "https://media.giphy.com/media/NS7gPxeumewkWDOIxi/source.gif",
+    "https://media.giphy.com/media/elsol3P5Jt2ASsxLva/source.gif"
+  ],
+  "conversation": [
+    "https://media.giphy.com/media/62PP2yEIAZF6g/source.gif",
+    "https://media.giphy.com/media/Jk4Sucdz1oGd2/source.gif",
+    "https://media.giphy.com/media/8g63zqQ5RPt60/source.gif"
+  ]
 }

@@ -7,7 +7,7 @@ const sendMessage = (message) => {
     return client.message(message, {})
 }
 
-const extractEntity = (nlp,entity,proba=0.8) => {
+const extractEntity = (nlp, entity, proba = 0.8) => {
     const { entities } = nlp;
     const keys = Object.keys(entities)
     for (let i = 0; i < keys.length; i++){

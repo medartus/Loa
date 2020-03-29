@@ -19,5 +19,8 @@
     "graphql-request": "^1.8.2",
     "node-wit": "^5.0.0"
   },
-  "proxy": "http://recommender:5000"
+  "proxy": "http://recommender:5000",
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
 }

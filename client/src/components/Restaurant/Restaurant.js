@@ -5,40 +5,23 @@ import Tilt from "react-tilt";
 
 import Skeleton from "react-loading-skeleton";
 import { IoIosStarHalf, IoIosStarOutline, IoIosStar } from "react-icons/io";
+import maps_icon from "../../assets/maps_icon.png";
 import { MdLocationOn } from "react-icons/md";
+import { priceFeedback } from "../../Constants";
 
 const PHOTO_DEFAULT =
   "https://cdn.dribbble.com/users/1042202/screenshots/5836341/icon-rest_2x.jpg";
+const ICON_SIZE = 15;
+const ICON_COLOR = "#4949e7";
+const SKELETON_WIDTH = 50;
 
-const Restaurant = ({ content }) => {
+const Restaurant = ({ content, index }) => {
   const getCategories = () => {
     let rep = "";
     for (let i in content.categories) {
       rep += content.categories[i].title + " ";
     }
     return rep;
-  };
-
-  const priceFeeback = () => {
-    switch (content.price) {
-      case "€":
-      case "$":
-        return "Pretty cheap!";
-      case "$$":
-      case "€€":
-        return "Affordable";
-      case "$$$":
-      case "€€€":
-        return "Quite expensive";
-      case "$$$$":
-      case "€€€€":
-        return "Prepare the money!";
-      case "$$$$$":
-      case "€€€€€":
-        return "Very expensive!";
-      default:
-        return "No price information";
-    }
   };
 
   const getImgUrl = () => {
@@ -58,7 +41,12 @@ const Restaurant = ({ content }) => {
     return (
       <div className="stars">
         {stars.map((Star, i) => (
-          <Star key={i} className="star-logo" color="#4949e7" size={15} />
+          <Star
+            key={i}
+            className="star-logo"
+            color={ICON_COLOR}
+            size={ICON_SIZE}
+          />
         ))}
       </div>
     );
@@ -69,19 +57,23 @@ const Restaurant = ({ content }) => {
       options={{ max: 10, scale: 1.04 }}
       style={{ width: "45%", height: "33vh" }}
     >
-      <div className="restaurant-element">
+      <div
+        className="restaurant-element"
+        style={{ animation: `slipIn 0.5s ease-in-out ${index * 100}ms` }}
+        onClick={() => window.open(content.url, "_blank")}
+      >
         <div className="element-top">
-          <img className="element-image" src={getImgUrl()} />
+          <img className="element-image" alt="restaurant" src={getImgUrl()} />
           <div className="element-infos">
             <div className="info-container">
-              <MdLocationOn color="#4949e7" size={15} />
+              <MdLocationOn color={ICON_COLOR} size={ICON_SIZE} />
               <p className="city">
                 {content.location.postal_code} {content.location.city}
               </p>
             </div>
             <div className="info-container">
               <p className="price">{content.price}</p>
-              <p className="price-feedback">{priceFeeback()}</p>
+              <p className="price-feedback">{priceFeedback(content)}</p>
             </div>
             <div className="info-container">
               {renderStars()}
@@ -95,9 +87,18 @@ const Restaurant = ({ content }) => {
             <p className="categories">{getCategories()}</p>
           </div>
           <div className="element-more">
-            <a className="more-button" href={content.url} target="_blank">
-              <p className="more-text">View more</p>
-            </a>
+            <div
+              onClick={e => {
+                window.open(
+                  `https://www.google.com/maps/search/?api=1&query=${content.coordinates.latitude},${content.coordinates.longitude}`,
+                  "_blank"
+                );
+                e.stopPropagation();
+              }}
+              className="more-button "
+            >
+              <img src={maps_icon} alt="maps" className="maps-icon" />
+            </div>
           </div>
         </div>
       </div>
@@ -109,7 +110,7 @@ const SkeletonRestaurant = () => (
   <div className="restaurant-element" style={{ width: "45%", height: "33vh" }}>
     <div className="element-top">
       <Skeleton width="14vw" height="20vh" />
-      <div className="element-infos">
+      <div className="element-infos" style={{ backgroundColor: "white" }}>
         <div className="info-container">
           <Skeleton width="10vw" height="2vh" />
         </div>
@@ -130,7 +131,11 @@ const SkeletonRestaurant = () => (
         <Skeleton width="12vw" height="3vh" style={{ marginTop: "10px" }} />
       </div>
       <div className="element-more">
-        <Skeleton circle={true} width={50} height={50} />
+        <Skeleton
+          circle={true}
+          width={SKELETON_WIDTH}
+          height={SKELETON_WIDTH}
+        />
       </div>
     </div>
   </div>

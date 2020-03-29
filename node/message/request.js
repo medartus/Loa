@@ -10,35 +10,31 @@ const {
 const textualResponse = require("../response/text.json");
 const gifResponse = require("../response/gif.json");
 
-const generatgif = (intent) => {
+const generateGif = intent => {
   const answer = gifResponse[intent.toLowerCase()];
   const index = Math.floor(Math.random() * answer.length);
   const gif = answer[index];
+  return gif;
 };
 
-
 const generateResponse = (intent, type, location, message, results) => {
-  if (message != null) {
-    const gif = generatgif(intent)
-    message = [
-      {
-        "type" : "text",
-        "content" : message
-      },
-      {
-        "type" : "gif",
-        "content" : gif
-      },
-    ]
+  if (message !== null) {
+    message = [{ type: "text", content: message }];
+    // generate gif with a probability of 0.5
+    const rnd = Math.floor(Math.random() * 2);
+    if (rnd === 1)
+      message.unshift({
+        type: "gif",
+        content: generateGif(intent)
+      });
   }
-  let response = {
+  return {
     intent,
     type,
     location,
     message,
     results
   };
-  return response;
 };
 
 const requestBusinessByIds = ids =>
@@ -49,7 +45,7 @@ const requestBusinessByIds = ids =>
         resolve(data);
       })
       .catch(e => reject(e));
-});
+  });
 
 const quickResponse = intent => {
   const answer = textualResponse[intent.toLowerCase()];
@@ -59,6 +55,18 @@ const quickResponse = intent => {
   const response = generateResponse(intent, null, null, message, null);
 
   return response;
+};
+
+const getMessageWithArgs = (intent, ...args) => {
+  const answer = textualResponse[intent.toLowerCase()];
+  const index = Math.floor(Math.random() * answer.length);
+  let message = answer[index];
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (arg === null) return null;
+    message = message.replace("#", arg.toString());
+  }
+  return message;
 };
 
 const recommend = (intent, desire, location) =>
@@ -75,11 +83,10 @@ const recommend = (intent, desire, location) =>
             results = [];
             for (let i = 0; i < ids.length; i++) {
               const business = rep[`b${i}`];
-              console.log(business["categories"]);
               results.push(business);
             }
 
-            message = `Oh, ${desire} is a good idea! Let me recommend you these restaurants.`;
+            message = getMessageWithArgs(intent, desire);
             rep = generateResponse(intent, desire, location, message, results);
             resolve(rep);
           })
@@ -90,9 +97,10 @@ const recommend = (intent, desire, location) =>
 
 const search = (intent, type, data, location) => {
   const results = data.search.business;
-  const message = `You can find a map of ${type} ${location.name}.`;
+  const message = getMessageWithArgs(intent, type, location.name);
+  // if something wasn't found in either of the above args (type, location.name)
+  if (message === null) return quickResponse("Misunderstanding");
   const response = generateResponse(intent, type, location, message, results);
-
   return response;
 };
 
@@ -107,7 +115,13 @@ const best = (intent, type, data, location) => {
     return b.score - a.score;
   });
 
-  const message = `The best ${type} ${location.name} is ${results[0].name}.`;
+  const message = getMessageWithArgs(
+    intent,
+    type,
+    location.name,
+    results[0].name
+  );
+  if (message === null) return quickResponse("Misunderstanding");
   const response = generateResponse(intent, type, location, message, results);
 
   return response;
@@ -116,7 +130,8 @@ const best = (intent, type, data, location) => {
 const howMany = (intent, type, data, location) => {
   const total = data.search.total;
 
-  const message = `There are ${total} ${type} ${location.name}.`;
+  const message = getMessageWithArgs(intent, total, type, location.name);
+  if (message === null) return quickResponse("Misunderstanding");
   const response = generateResponse(intent, type, location, message, []);
 
   return response;
@@ -156,7 +171,6 @@ const yelpGraphQL = (intent, type, location) =>
             break;
           default:
             throw new ErrorHandler(500, "No intent found");
-            break;
         }
         resolve(response);
       })

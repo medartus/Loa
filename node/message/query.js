@@ -1,4 +1,4 @@
-const businessInfos = (i,id) => {
+const businessInfos = (i, id) => {
   return `b${i}: business(id: "${id}")
     {
       name
@@ -21,17 +21,17 @@ const businessInfos = (i,id) => {
         longitude
       }
       photos
-    }\n`
-}
+    }\n`;
+};
 
-const businessQuery = (ids) => {
-  query = '{'
-  for(let i = 0; i<ids.length;i++){
-    query+=businessInfos(i,ids[i])
+const businessQuery = ids => {
+  query = "{";
+  for (let i = 0; i < ids.length; i++) {
+    query += businessInfos(i, ids[i]);
   }
-  query += '}'
-  return query
-}
+  query += "}";
+  return query;
+};
 
 const searchQuery = (term, long, lat) => {
   return `{
@@ -59,8 +59,8 @@ const searchQuery = (term, long, lat) => {
         photos
       }
     }
-  }`
-}
+  }`;
+};
 
 const bestQuery = (term, long, lat) => {
   return `{
@@ -89,15 +89,15 @@ const bestQuery = (term, long, lat) => {
         photos
       }
     }
-  }`
-}
+  }`;
+};
 
 const howManyQuery = (term, long, lat) => {
   return `{
     search(term: "${term}", longitude:${long},latitude:${lat}) {
       total
     }
-  }`
-}
+  }`;
+};
 
-module.exports = { businessQuery, searchQuery , bestQuery, howManyQuery }
+module.exports = { businessQuery, searchQuery, bestQuery, howManyQuery };

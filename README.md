@@ -20,14 +20,24 @@ A small AI-based conversational agent capable of providing accurate informations
   - [📝 To do](#%f0%9f%93%9d-to-do)
   - [👩‍💻 Usage](#%f0%9f%91%a9%e2%80%8d%f0%9f%92%bb-usage)
     - [Chatbot Capabilities](#chatbot-capabilities)
-    - [**1 - Greeting**](#1---greeting)
+    - [**2 - How many restaurants**](#2---how-many-restaurants)
       - [Example](#example)
     - [**2 - Search restaurants**](#2---search-restaurants)
       - [Example](#example-1)
     - [**3 - Find the best restaurant**](#3---find-the-best-restaurant)
       - [Example](#example-2)
-    - [**4 - How many restaurants**](#4---how-many-restaurants)
+    - [**4 - Greeting**](#4---greeting)
       - [Example](#example-3)
+    - [**5 - Example**](#5---example)
+      - [Example](#example-4)
+    - [**5 - Example**](#5---example-1)
+      - [Example](#example-5)
+    - [**6 - Thanks**](#6---thanks)
+      - [Example](#example-6)
+    - [**7 - Goodbye**](#7---goodbye)
+      - [Example](#example-7)
+    - [**8 - Conversation**](#8---conversation)
+      - [Example](#example-8)
     - [Recommendation Engine](#recommendation-engine-1)
   - [🏃‍♀️ Testing](#%f0%9f%8f%83%e2%80%8d%e2%99%80%ef%b8%8f-testing)
 
@@ -64,14 +74,14 @@ We use [wit.ai](https://wit.ai) to convert text to intent using NLP. We have tra
 ## 📝 To do
 
 - [x] Desing & Prototype on Figma
-- [ ] Define constraints and objectives
+- [x] Define constraints and objectives
 - [x] Implement basic front-end interface
-- [ ] Train wit.ai agent on our intents
-- [ ] Design and Connect Node API to wit.ai
-- [ ] Gather data and design Recommendation Engine
-- [ ] Serve our APIS as services and host them
-- [ ] Finish front-end interface
-- [ ] Tests along the way
+- [x] Train wit.ai agent on our intents
+- [x] Design and Connect Node API to wit.ai
+- [x] Gather data and design Recommendation Engine
+- [x] Serve our APIS as services and host them
+- [x] Finish front-end interface
+- [ ] Test along the way
 
 <a name="usage"/>
 
@@ -81,19 +91,19 @@ We use [wit.ai](https://wit.ai) to convert text to intent using NLP. We have tra
 
 ### Chatbot Capabilities
 
-<a name="greeting"/>
+<a name="number-restaurants" />
 
-### **1 - Greeting**
+### **2 - How many restaurants**
 
 Type of Question:
 
-- **Hello**, how are you ?
-- **Good morning**!
-- **Hi**, what's up ?
+- How **many** **restaurants** are in **New York** ?
+- What is the **number** of **restaurants** **around me** ?
+- What is the **number** of **restaurants** in **Colorado** ?
 
 #### Example
 
-_1 - Node.js API request :_
+_1 - Request :_
 
 Requesting the Node API :  
 `Endpoint :` POST /message
@@ -102,7 +112,7 @@ We call our Node API we this structure :
 
 ```json
 {
-  "message": "Hi, what's up ?",
+  "message": "What is the number of restaurants in Colorado ?",
   "user": {
     "coordinates": {
       "latitude": 34.052234,
@@ -118,32 +128,66 @@ Wit.ai will exctract intent and entities from the user question.
 
 The question :
 
-> **Hi**, what's up ?
+> What is the **number** of **restaurants** in **Colorado** ?
 
 Will return :
 
-| Variable |  Value   |
-| :------: | :------: |
-| `Intent` | Greeting |
+|  Variable  |    Value    |
+| :--------: | :---------: |
+|  `Intent`  |   Number    |
+|  `Object`  | Restaurants |
+| `Location` |  Colorado   |
 
-_3 - User reponse generation_
+_3 - Yelp API :_
+
+With the information, we call the _Yelp API_ and use the result to build our API response :
+
+_Yelp Graphql API request :_
+
+```
+{
+  search(term: "restaurant", location:"Colorado") {
+    total
+  }
+}
+```
+
+_Yelp Graphql API response :_
+
+```json
+{
+  "data": {
+    "search": {
+      "total": 2952
+    }
+  }
+}
+```
+
+_4 - User reponse generation_
 
 After getting all the information in order to answer the user demand, **we use Natural Language Generation to display a response**.
 
 additionally, **we display the concenred result(s) on the right side of our web application**.
 
-In our example we want to display a map of the reslut and tell it to the user.
+In our example we want to display a map of the result and tell it to the user.
 
-_4 - Node.js API response_
+_5 - Node.js API response_
 
-Gathering all of these steps, our API will return :
+Gathering all of these steps, our API will return a sample response :
 
 ```json
 {
-  "intent": "Greeting",
-  "type": null,
-  "location": null,
-  "message": "Hi, I'm great, and you ?",
+  "intent": "Number",
+  "type": "Restaurants",
+  "location": {
+    "name": "Colorado",
+    "coordinates": {
+      "latitude": 39.55051,
+      "longitude": -105.782067
+    }
+  },
+  "message": "There are 2952 restaurants in Colorado. ⏲️",
   "results": []
 }
 ```
@@ -265,11 +309,11 @@ After getting all the information in order to answer the user demand, **we use N
 
 additionally, **we display the concenred result(s) on the right side of our web application**.
 
-In our example we want to display a map of the reslut and tell it to the user.
+In our example we want to display a map of the result and tell it to the user.
 
 _5 - Node.js API response_
 
-Gathering all of these steps, our API will return :
+Gathering all of these steps, our API will return a sample response :
 
 ```json
 {
@@ -282,7 +326,7 @@ Gathering all of these steps, our API will return :
       "longitude": -118.243685
     }
   },
-  "message": "You will find a map of restaurants in Los Angeles.",
+  "message": "You can find a selection of restaurants in Los Angeles. 🏨",
   "results": [
     {
       "name": "Howlin' Ray's",
@@ -429,11 +473,11 @@ After getting all the information in order to answer the user demand, **we use N
 
 additionally, **we display the concenred result(s) on the right side of our web application**.
 
-In our example we want to display a map of the reslut and tell it to the user.
+In our example we want to display a map of the result and tell it to the user.
 
 _5 - Node.js API response_
 
-Gathering all of these steps, our API will return :
+Gathering all of these steps, our API will return a sample response a sample response:
 
 ```json
 {
@@ -446,7 +490,7 @@ Gathering all of these steps, our API will return :
       "longitude": -74.005973
     }
   },
-  "message": "The best restaurant in New York is LoveMama.",
+  "message": "The best restaurant in New York is LoveMama. 💯",
   "results": [
     {
       "name": "LoveMama",
@@ -473,19 +517,19 @@ Gathering all of these steps, our API will return :
 }
 ```
 
-<a name="number-restaurants" />
+<a name="greeting"/>
 
-### **4 - How many restaurants**
+### **4 - Greeting**
 
 Type of Question:
 
-- How **many** **restaurants** are in **New York** ?
-- What is the **number** of **restaurants** **around me** ?
-- What is the **number** of **restaurants** in **Colorado** ?
+- **Hello**, how are you ?
+- **Good morning**!
+- **Hi**, what's up ?
 
 #### Example
 
-_1 - Request :_
+_1 - Node.js API request :_
 
 Requesting the Node API :  
 `Endpoint :` POST /message
@@ -494,7 +538,7 @@ We call our Node API we this structure :
 
 ```json
 {
-  "message": "What is the number of restaurants in Colorado ?",
+  "message": "Hi, what's up ?",
   "user": {
     "coordinates": {
       "latitude": 34.052234,
@@ -510,66 +554,355 @@ Wit.ai will exctract intent and entities from the user question.
 
 The question :
 
-> What is the **number** of **restaurants** in **Colorado** ?
+> **Hi**, what's up ?
 
 Will return :
 
-|  Variable  |    Value    |
-| :--------: | :---------: |
-|  `Intent`  |   Number    |
-|  `Object`  | Restaurants |
-| `Location` |  Colorado   |
+| Variable |  Value   |
+| :------: | :------: |
+| `Intent` | Greeting |
 
-_3 - Yelp API :_
-
-With the information, we call the _Yelp API_ and use the result to build our API response :
-
-_Yelp Graphql API request :_
-
-```
-{
-  search(term: "restaurant", location:"Colorado") {
-    total
-  }
-}
-```
-
-_Yelp Graphql API response :_
-
-```json
-{
-  "data": {
-    "search": {
-      "total": 2952
-    }
-  }
-}
-```
-
-_4 - User reponse generation_
+_3 - User reponse generation_
 
 After getting all the information in order to answer the user demand, **we use Natural Language Generation to display a response**.
 
 additionally, **we display the concenred result(s) on the right side of our web application**.
 
-In our example we want to display a map of the reslut and tell it to the user.
+In our example we want to display a map of the result and tell it to the user.
 
-_5 - Node.js API response_
+_4 - Node.js API response_
 
-Gathering all of these steps, our API will return :
+Gathering all of these steps, our API will return a sample response :
 
 ```json
 {
-  "intent": "Number",
-  "type": "Restaurants",
-  "location": {
-    "name": "Colorado",
+  "intent": "Greeting",
+  "type": null,
+  "location": null,
+  "message": "Hi, what's can I do for you today ? 👩",
+  "results": []
+}
+```
+
+<a name="example"/>
+
+### **5 - Example**
+
+Type of Question:
+
+- Can I get an **example** ?
+- Can you give me an **example** of question ?
+- What can I **ask** you ?
+
+#### Example
+
+_1 - Node.js API request :_
+
+Requesting the Node API :  
+`Endpoint :` POST /message
+
+We call our Node API we this structure :
+
+```json
+{
+  "message": "Can I get an example ?",
+  "user": {
     "coordinates": {
-      "latitude": 39.55051,
-      "longitude": -105.782067
+      "latitude": 34.052234,
+      "longitude": -118.243685
     }
-  },
-  "message": "There are 2952 restaurants in Colorado",
+  }
+}
+```
+
+_2 - Wit.ai Intent extraction :_
+
+Wit.ai will exctract intent and entities from the user question.
+
+The question :
+
+> Can I get an **example** ?
+
+Will return :
+
+| Variable |  Value  |
+| :------: | :-----: |
+| `Intent` | Example |
+
+_3 - User reponse generation_
+
+After getting all the information in order to answer the user demand, **we use Natural Language Generation to display a response**.
+
+additionally, **we display the concenred result(s) on the right side of our web application**.
+
+In our example we want to display a map of the result and tell it to the user.
+
+_4 - Node.js API response_
+
+Gathering all of these steps, our API will return a sample response :
+
+```json
+{
+  "intent": "Example",
+  "type": null,
+  "location": null,
+  "message": "Here's some examples: 📝 - Can you recommend me an italian restaurant ?\n     - What is the number of restaurants in Seattle ?   - Can you show me the restaurants around me ?\n   - What is the best restaurant in Los Angeles ?\n",
+  "results": []
+}
+```
+
+<a name="example"/>
+
+### **5 - Example**
+
+Type of Question:
+
+- Can I get an **example** ?
+- Can you give me an **example** of question ?
+- What can I **ask** you ?
+
+#### Example
+
+_1 - Node.js API request :_
+
+Requesting the Node API :  
+`Endpoint :` POST /message
+
+We call our Node API we this structure :
+
+```json
+{
+  "message": "Can I get an example ?",
+  "user": {
+    "coordinates": {
+      "latitude": 34.052234,
+      "longitude": -118.243685
+    }
+  }
+}
+```
+
+_2 - Wit.ai Intent extraction :_
+
+Wit.ai will exctract intent and entities from the user question.
+
+The question :
+
+> Can I get an **example** ?
+
+Will return :
+
+| Variable |  Value  |
+| :------: | :-----: |
+| `Intent` | Example |
+
+_3 - User reponse generation_
+
+After getting all the information in order to answer the user demand, **we use Natural Language Generation to display a response**.
+
+additionally, **we display the concenred result(s) on the right side of our web application**.
+
+In our example we want to display a map of the result and tell it to the user.
+
+_4 - Node.js API response_
+
+Gathering all of these steps, our API will return a sample response :
+
+```json
+{
+  "intent": "Example",
+  "type": null,
+  "location": null,
+  "message": "Here's some examples: 📝 - Can you recommend me an italian restaurant ?\n     - What is the number of restaurants in Seattle ?   - Can you show me the restaurants around me ?\n   - What is the best restaurant in Los Angeles ?\n",
+  "results": []
+}
+```
+
+<a name="thanks"/>
+
+### **6 - Thanks**
+
+Type of Sentence:
+
+- **Thanks** for helping me
+- **Thank your** for your help
+- **Thank you** for your response
+
+#### Example
+
+_1 - Node.js API request :_
+
+Requesting the Node API :  
+`Endpoint :` POST /message
+
+We call our Node API we this structure :
+
+```json
+{
+  "message": "Thanks for helping me",
+  "user": {
+    "coordinates": {
+      "latitude": 34.052234,
+      "longitude": -118.243685
+    }
+  }
+}
+```
+
+_2 - Wit.ai Intent extraction :_
+
+Wit.ai will exctract intent and entities from the user question.
+
+The question :
+
+> **Thanks** for helping me
+
+Will return :
+
+| Variable | Value  |
+| :------: | :----: |
+| `Intent` | Thanks |
+
+_3 - User reponse generation_
+
+After getting all the information in order to answer the user demand, **we use Natural Language Generation to display a response**.
+
+additionally, **we display the concenred result(s) on the right side of our web application**.
+
+In our example we want to display a map of the result and tell it to the user.
+
+_4 - Node.js API response_
+
+Gathering all of these steps, our API will return a sample response :
+
+```json
+{
+  "intent": "Thanks",
+  "type": null,
+  "location": null,
+  "message": "Don't worry, I'm very happy to help you ! 🤗 Need more help ?",
+  "results": []
+}
+```
+
+<a name="goodbye"/>
+
+### **7 - Goodbye**
+
+Type of Sentence:
+
+- **Goodbye**
+- See you **soon** !
+- I'm going to **leave**, bye !
+
+#### Example
+
+_1 - Node.js API request :_
+
+Requesting the Node API :  
+`Endpoint :` POST /message
+
+We call our Node API we this structure :
+
+```json
+{
+  "message": "Goodbye",
+  "user": {
+    "coordinates": {
+      "latitude": 34.052234,
+      "longitude": -118.243685
+    }
+  }
+}
+```
+
+_2 - Wit.ai Intent extraction :_
+
+Wit.ai will exctract intent and entities from the user question.
+
+The sentence :
+
+> **Goodbye**
+
+Will return :
+
+| Variable |  Value  |
+| :------: | :-----: |
+| `Intent` | Goodbye |
+
+_3 - User reponse generation_
+
+After getting all the information in order to answer the user demand, **we use Natural Language Generation to display a response**.
+
+additionally, **we display the concenred result(s) on the right side of our web application**.
+
+In our example we want to display a map of the result and tell it to the user.
+
+_4 - Node.js API response_
+
+Gathering all of these steps, our API will return a sample response :
+
+```json
+{
+  "intent": "Goodbye",
+  "type": null,
+  "location": null,
+  "message": "I was a pleasure to help you, goodbye ! 😀",
+  "results": []
+}
+```
+
+<a name="conversation"/>
+
+### **8 - Conversation**
+
+This one is particular, it applies to all the sentence that bot didn't train on, but are not a question from the user.
+
+Type of Sentence (endless):
+
+- Ahah I agree!
+- Oh that is cool!
+- Awesome I like the results
+
+#### Example
+
+_1 - Node.js API request :_
+
+Requesting the Node API :  
+`Endpoint :` POST /message
+
+We call our Node API we this structure :
+
+```json
+{
+  "message": "Ahah I agree! ",
+  "user": {
+    "coordinates": {
+      "latitude": 34.052234,
+      "longitude": -118.243685
+    }
+  }
+}
+```
+
+_2 - User reponse generation_
+
+After getting all the information in order to answer the user demand, **we use Natural Language Generation to display a response**.
+
+additionally, **we display the concenred result(s) on the right side of our web application**.
+
+In our example we want to display a map of the result and tell it to the user.
+
+_4 - Node.js API response_
+
+Gathering all of these steps, our API will return a sample response :
+
+```json
+{
+  "intent": "Misunderstanding",
+  "type": null,
+  "location": null,
+  "message": "I find it pretty cool 🤓",
   "results": []
 }
 ```
@@ -581,5 +914,3 @@ Gathering all of these steps, our API will return :
 <a name="testing"/>
 
 ## 🏃‍♀️ Testing
-
-TO DO
