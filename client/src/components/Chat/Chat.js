@@ -45,7 +45,9 @@ const Chat = ({ userLocation, setRestaurants, setLoading, loading }) => {
           user: { coordinates: userLocation }
         })
       };
-      return fetch("/api/v1/message/", requestOptions);
+      let apiUrl = ''
+      if (process.env.API_ENDPOINT != undefined) apiUrl = process.env.API_ENDPOINT
+      return fetch(apiUrl+"/api/v1/message/", requestOptions);
     };
 
     if (loading && userLocation !== null) {

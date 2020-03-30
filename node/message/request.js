@@ -1,5 +1,6 @@
 const { graphqlQuery } = require("../api/graphql");
 const axios = require("axios");
+const { RECOMMEND_ENDPOINT } = require('../config');
 const {
   businessQuery,
   searchQuery,
@@ -89,7 +90,7 @@ const recommend = (intent, desire, location) =>
   new Promise((resolve, reject) => {
     if (!desire) desire = "restaurant";
     axios
-      .post("https://loa-recommend.herokuapp.com/v1/recommend", {
+      .post(RECOMMEND_ENDPOINT, {
         message: desire
       })
       .then(response => {

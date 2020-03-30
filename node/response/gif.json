@@ -19,7 +19,9 @@
     "https://media.giphy.com/media/UrcXN0zTfzTPi/source.gif",
     "https://media.giphy.com/media/3ohhwlR8bBxEOqFxIY/source.gif"
   ],
-  "example": ["https://media.giphy.com/media/szeVLlECC8ThC/source.gif"],
+  "example": [
+    "https://media.giphy.com/media/szeVLlECC8ThC/source.gif"
+  ],
   "recommend": [
     "https://media.giphy.com/media/7JzHsh3UTip20/source.gif",
     "https://media.giphy.com/media/eSQKNSmg07dHq/source.gif"
