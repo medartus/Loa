@@ -5,8 +5,6 @@ import { IoMdSend } from "react-icons/io";
 import ResizableTextarea from "../ResizableTextarea";
 import Bubble from "../Bubble";
 
-// import axios from "axios";
-
 import logo from "../../assets/logo.png";
 import { BOT, USER, THINKING, INIT_BUBBLES } from "../../Constants";
 
@@ -47,7 +45,7 @@ const Chat = ({ userLocation, setRestaurants, setLoading, loading }) => {
           user: { coordinates: userLocation }
         })
       };
-      return fetch("/v1/message/", requestOptions);
+      return fetch("/api/v1/message/", requestOptions);
     };
 
     if (loading && userLocation !== null) {

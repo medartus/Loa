@@ -1,22 +1,38 @@
 version: "2"
 services:
-  node:
-    build:
-      context: ./node/
-    ports:
-      - "8080:8080"
   recommender:
     build:
       context: ./recommenderAPI/
+    volumes:
+      - ./recommenderAPI:/usr/src/app
+    restart: always
     ports:
       - "5000:5000"
+  node:
+    build:
+      context: ./node/
+    volumes:
+      - ./node:/usr/src/app
+    restart: always
+    ports:
+      - "4000:4000"    
+    depends_on:
+      - recommender
+    links:
+      - recommender
   client:
     build:
       context: ./client/
-    command: npm start
+    command: nginx -g "daemon off;"
+    # command: npm start
+    restart: always
+    volumes:
+      - ./client:/app/src
     depends_on:
       - node
     links:
-      - node
+      - node       
+    expose:
+      - 80
     ports:
-      - "3000:3000"
+      - "80:80"

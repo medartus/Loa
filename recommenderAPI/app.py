@@ -9,7 +9,6 @@ api = Api(app)
 parser = reqparse.RequestParser()
 
 # Data initialisation
-
 (Q, userid_vectorizer) = getMatrix()
 
 class Home(Resource):
@@ -17,6 +16,7 @@ class Home(Resource):
         return {
             "updated": True
         }
+
 
 class Recommend(Resource):
     def post(self):
@@ -34,8 +34,8 @@ class Recommend(Resource):
         }
 
 
-api.add_resource(Recommend, '/v1/recommend')
-api.add_resource(Home, '/')
+api.add_resource(Recommend, '/recommender/v1/recommend/')
+api.add_resource(Home, '/recommender/')
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0")
+    app.run(host="0.0.0.0")
