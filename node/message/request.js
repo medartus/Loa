@@ -89,7 +89,6 @@ const getMessageWithArgs = (intent, ...args) => {
 const recommend = (intent, desire, location) =>
   new Promise((resolve, reject) => {
     if (!desire) desire = "restaurant";
-    console.log(RECOMMEND_ENDPOINT)
     axios
       .post(RECOMMEND_ENDPOINT, {
         message: desire
