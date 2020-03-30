@@ -8,6 +8,8 @@ import Bubble from "../Bubble";
 import logo from "../../assets/logo.png";
 import { BOT, USER, THINKING, INIT_BUBBLES } from "../../Constants";
 
+import { API_ENDPOINT } from "../../config";
+
 const NO_LOCATION_MESSAGE =
   "Oh, I can't access your location. Please allow me to access it so I can help you.";
 const ICON_COLOR = "#4949e7";
@@ -45,9 +47,7 @@ const Chat = ({ userLocation, setRestaurants, setLoading, loading }) => {
           user: { coordinates: userLocation }
         })
       };
-      let apiUrl = ''
-      if (process.env.API_ENDPOINT != undefined) apiUrl = process.env.API_ENDPOINT
-      return fetch(apiUrl+"/api/v1/message/", requestOptions);
+      return fetch(API_ENDPOINT+"/api/v1/message/", requestOptions);
     };
 
     if (loading && userLocation !== null) {
