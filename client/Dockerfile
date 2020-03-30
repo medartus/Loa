@@ -5,6 +5,8 @@ COPY package.json /app/package.json
 RUN npm install
 COPY . /app
 
+ENV REACT_APP_API_ENDPOINT=http://localhost
+
 # CMD ["npm", "start"]
 
 RUN npm run build
