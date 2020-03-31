@@ -92,7 +92,7 @@
 
 @media only screen and (max-width: 920px) {
   .chat-container {
-    width: calc(100vw - 80px);
+    width: 100vw;
     height: auto;
     position: absolute;
     top: 70vh;

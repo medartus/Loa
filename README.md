@@ -4,7 +4,7 @@ A small AI-based conversational agent capable of providing accurate informations
 
 ## Demo
 
-![](https://media.giphy.com/media/gfwGJdXuj08X4YcRQu/source.gif)
+![](demo.gif)
 
 ## **Table of contents**:
 
@@ -15,12 +15,11 @@ A small AI-based conversational agent capable of providing accurate informations
     - [Tech-Stack and Implementation](#tech-stack-and-implementation)
       - [Front-end](#front-end)
       - [Back-end](#back-end)
-        - [Chatbot API](#chatbot-api)
-        - [Recommendation Engine](#recommendation-engine)
-  - [📝 To do](#%f0%9f%93%9d-to-do)
+        - [_1 - Chatbot API (NodeJS)_](#1---chatbot-api-nodejs)
+        - [_2 - Recommendation Engine API (Flask)_](#2---recommendation-engine-api-flask)
   - [👩‍💻 Usage](#%f0%9f%91%a9%e2%80%8d%f0%9f%92%bb-usage)
-    - [Chatbot Capabilities](#chatbot-capabilities)
-    - [**2 - How many restaurants**](#2---how-many-restaurants)
+    - [Chatbot Capabilities (Workflows)](#chatbot-capabilities-workflows)
+    - [**1 - How many restaurants**](#1---how-many-restaurants)
       - [Example](#example)
     - [**2 - Search restaurants**](#2---search-restaurants)
       - [Example](#example-1)
@@ -30,72 +29,65 @@ A small AI-based conversational agent capable of providing accurate informations
       - [Example](#example-3)
     - [**5 - Example**](#5---example)
       - [Example](#example-4)
-    - [**5 - Example**](#5---example-1)
-      - [Example](#example-5)
     - [**6 - Thanks**](#6---thanks)
-      - [Example](#example-6)
+      - [Example](#example-5)
     - [**7 - Goodbye**](#7---goodbye)
-      - [Example](#example-7)
-    - [**8 - Conversation**](#8---conversation)
-      - [Example](#example-8)
-    - [Recommendation Engine](#recommendation-engine-1)
-  - [🏃‍♀️ Testing](#%f0%9f%8f%83%e2%80%8d%e2%99%80%ef%b8%8f-testing)
-
-<a name="objectives"/>
+      - [Example](#example-6)
+    - [**Recommendation Engine**](#recommendation-engine)
+  - [🏃‍♀️ How to test it ?](#%f0%9f%8f%83%e2%80%8d%e2%99%80%ef%b8%8f-how-to-test-it)
+  - [📝 To do](#%f0%9f%93%9d-to-do)
 
 ## 🎯 Objectives
 
-<a name="stack"/>
-
 ### Tech-Stack and Implementation
 
-We use [wit.ai](https://wit.ai) to convert text to intent using NLP. We have trained a model in Python to recommend restaurant with the user preference. Otherwise if they don't need recommendation, we use the yelp API to provide some information. Node.js merge all this processing into one service wich is going to be easier to use in the front end.
+We use [wit.ai](https://wit.ai) to convert user-text to intents using **Natural Language Processing**. We have trained a model with Python to recommend restaurants with respect to user queries and desires. If they do not ask for recommendation, we use the yelp API to provide information based on user-location and his query.
 
 ![stack schema](https://user-images.githubusercontent.com/45569127/76697698-96401400-669a-11ea-90af-80bbfb78d9ca.JPG)
 
-<a name="front-end"/>
-
 #### Front-end
 
-<a name="back-end"/>
+In this project and in like many nowadays, we chose to use **React** for the client interface.
+
+**Description**
+
+React is a JavaScript library for building user interfaces. It is maintained by Facebook and a community of individual developers and companies. React can be used as a base in the development of single-page or mobile applications.React is only concerned with rendering data to the DOM.
+
+**How we use it**
+
+We use React for all the frontend part. React only powers the user interface, interprets what the user wants to perform and calls our NodeJS API.
 
 #### Back-end
 
-<a name="chatbot-api"/>
+For the back-end, we decided to stay with NodeJS as a central service, as it's a technology we are familiar and realtively easy to integrate with other services. We also have a Python Flask API, which powers the recommendation of restaurants.
 
-##### Chatbot API
+##### _1 - Chatbot API (NodeJS)_
 
-<a name="recommendation-engine-stack"/>
+**Description**
 
-##### Recommendation Engine
+Node.js is an open-source, cross-platform, JavaScript runtime environment that executes JavaScript code outside of a web browser. Node.js lets developers use JavaScript to write command line tools and for server-side scripting—running scripts server-side to produce dynamic web page content before the page is sent to the user's web browser.
 
-<a name="todo"/>
+**How we use it**
 
-## 📝 To do
+We use it to centralize the variety of the user's requests. It almost serves as a middleware between the client, and the three various API's (wit.ai, yelp and our own recommender API). For every message that the user sends, we send the payload to wit from there, and then handle the logic of calling either YELP or our own recommender system.
 
-- [x] Desing & Prototype on Figma
-- [x] Define constraints and objectives
-- [x] Implement basic front-end interface
-- [x] Train wit.ai agent on our intents
-- [x] Design and Connect Node API to wit.ai
-- [x] Gather data and design Recommendation Engine
-- [x] Serve our APIS as services and host them
-- [x] Finish front-end interface
-- [ ] Test along the way
+##### _2 - Recommendation Engine API (Flask)_
 
-<a name="usage"/>
+**Description**
+
+Flask is a lightweight WSGI web application framework. It is designed to make getting started quick and easy, with the ability to scale up to complex applications. It began as a simple wrapper around Werkzeug and Jinja and has become one of the most popular Python web application frameworks.
+
+**How we use it**
+
+We use Flask to build a basic API that will handle only one route for recommending restaurants. This API is agnostic of all the intent extracting and analysis logic, it's only made to provide an abstraction to return recommended restaurants to the NodeJS API.
 
 ## 👩‍💻 Usage
 
-<a name="chatbot-capabilities"/>
+### Chatbot Capabilities (Workflows)
 
-### Chatbot Capabilities
+### **1 - How many restaurants**
 
-<a name="number-restaurants" />
-
-### **2 - How many restaurants**
-
-Type of Question:
+Types of Question:
 
 - How **many** **restaurants** are in **New York** ?
 - What is the **number** of **restaurants** **around me** ?
@@ -192,11 +184,9 @@ Gathering all of these steps, our API will return a sample response :
 }
 ```
 
-<a name="show-restaurants"/>
-
 ### **2 - Search restaurants**
 
-Type of Question :
+Types of Question :
 
 - Can you **show** me the **restaurants** **around me** ?
 - Can you **show** me the **restaurants** in **Los Angeles** ?
@@ -309,7 +299,7 @@ After getting all the information in order to answer the user demand, **we use N
 
 additionally, **we display the concenred result(s) on the right side of our web application**.
 
-In our example we want to display a map of the result and tell it to the user.
+In our example we want to display restaurants searched by the user.
 
 _5 - Node.js API response_
 
@@ -352,11 +342,9 @@ Gathering all of these steps, our API will return a sample response :
 }
 ```
 
-<a name="best-restaurant"/>
-
 ### **3 - Find the best restaurant**
 
-Type of Question
+Types of Question
 
 - What is the **best** **restaurant** in **New York** ?
 - What is the **best** **restaurant** **around me** ?
@@ -473,7 +461,7 @@ After getting all the information in order to answer the user demand, **we use N
 
 additionally, **we display the concenred result(s) on the right side of our web application**.
 
-In our example we want to display a map of the result and tell it to the user.
+In our example we want to display the best results and tell it to the user.
 
 _5 - Node.js API response_
 
@@ -517,11 +505,9 @@ Gathering all of these steps, our API will return a sample response a sample res
 }
 ```
 
-<a name="greeting"/>
-
 ### **4 - Greeting**
 
-Type of Question:
+Types of Question:
 
 - **Hello**, how are you ?
 - **Good morning**!
@@ -566,10 +552,6 @@ _3 - User reponse generation_
 
 After getting all the information in order to answer the user demand, **we use Natural Language Generation to display a response**.
 
-additionally, **we display the concenred result(s) on the right side of our web application**.
-
-In our example we want to display a map of the result and tell it to the user.
-
 _4 - Node.js API response_
 
 Gathering all of these steps, our API will return a sample response :
@@ -584,11 +566,9 @@ Gathering all of these steps, our API will return a sample response :
 }
 ```
 
-<a name="example"/>
-
 ### **5 - Example**
 
-Type of Question:
+Types of Question:
 
 - Can I get an **example** ?
 - Can you give me an **example** of question ?
@@ -633,10 +613,6 @@ _3 - User reponse generation_
 
 After getting all the information in order to answer the user demand, **we use Natural Language Generation to display a response**.
 
-additionally, **we display the concenred result(s) on the right side of our web application**.
-
-In our example we want to display a map of the result and tell it to the user.
-
 _4 - Node.js API response_
 
 Gathering all of these steps, our API will return a sample response :
@@ -650,83 +626,14 @@ Gathering all of these steps, our API will return a sample response :
   "results": []
 }
 ```
-
-<a name="example"/>
-
-### **5 - Example**
-
-Type of Question:
-
-- Can I get an **example** ?
-- Can you give me an **example** of question ?
-- What can I **ask** you ?
-
-#### Example
-
-_1 - Node.js API request :_
-
-Requesting the Node API :  
-`Endpoint :` POST /message
-
-We call our Node API we this structure :
-
-```json
-{
-  "message": "Can I get an example ?",
-  "user": {
-    "coordinates": {
-      "latitude": 34.052234,
-      "longitude": -118.243685
-    }
-  }
-}
-```
-
-_2 - Wit.ai Intent extraction :_
-
-Wit.ai will exctract intent and entities from the user question.
-
-The question :
-
-> Can I get an **example** ?
-
-Will return :
-
-| Variable |  Value  |
-| :------: | :-----: |
-| `Intent` | Example |
-
-_3 - User reponse generation_
-
-After getting all the information in order to answer the user demand, **we use Natural Language Generation to display a response**.
-
-additionally, **we display the concenred result(s) on the right side of our web application**.
-
-In our example we want to display a map of the result and tell it to the user.
-
-_4 - Node.js API response_
-
-Gathering all of these steps, our API will return a sample response :
-
-```json
-{
-  "intent": "Example",
-  "type": null,
-  "location": null,
-  "message": "Here's some examples: 📝 - Can you recommend me an italian restaurant ?\n     - What is the number of restaurants in Seattle ?   - Can you show me the restaurants around me ?\n   - What is the best restaurant in Los Angeles ?\n",
-  "results": []
-}
-```
-
-<a name="thanks"/>
 
 ### **6 - Thanks**
 
-Type of Sentence:
+Types of Sentence:
 
 - **Thanks** for helping me
-- **Thank your** for your help
-- **Thank you** for your response
+- **Thank you** for your help
+- **Thank you** for your responses
 
 #### Example
 
@@ -767,10 +674,6 @@ _3 - User reponse generation_
 
 After getting all the information in order to answer the user demand, **we use Natural Language Generation to display a response**.
 
-additionally, **we display the concenred result(s) on the right side of our web application**.
-
-In our example we want to display a map of the result and tell it to the user.
-
 _4 - Node.js API response_
 
 Gathering all of these steps, our API will return a sample response :
@@ -785,11 +688,9 @@ Gathering all of these steps, our API will return a sample response :
 }
 ```
 
-<a name="goodbye"/>
-
 ### **7 - Goodbye**
 
-Type of Sentence:
+Types of Sentence:
 
 - **Goodbye**
 - See you **soon** !
@@ -834,10 +735,6 @@ _3 - User reponse generation_
 
 After getting all the information in order to answer the user demand, **we use Natural Language Generation to display a response**.
 
-additionally, **we display the concenred result(s) on the right side of our web application**.
-
-In our example we want to display a map of the result and tell it to the user.
-
 _4 - Node.js API response_
 
 Gathering all of these steps, our API will return a sample response :
@@ -852,65 +749,38 @@ Gathering all of these steps, our API will return a sample response :
 }
 ```
 
-<a name="conversation"/>
+### **Recommendation Engine**
 
-### **8 - Conversation**
+As said above, we decided to build our own API and recommender system with Python, to be able to recommend restaurants to users.
 
-This one is particular, it applies to all the sentence that bot didn't train on, but are not a question from the user.
+## 🏃‍♀️ How to test it ?
 
-Type of Sentence (endless):
+You can test the project with a live demo by going [there!](https://loabot.netlify.com/)
 
-- Ahah I agree!
-- Oh that is cool!
-- Awesome I like the results
+Or, you can test this project locally with **Docker** using the following steps :
 
-#### Example
+1. First clone this repository
 
-_1 - Node.js API request :_
-
-Requesting the Node API :  
-`Endpoint :` POST /message
-
-We call our Node API we this structure :
-
-```json
-{
-  "message": "Ahah I agree! ",
-  "user": {
-    "coordinates": {
-      "latitude": 34.052234,
-      "longitude": -118.243685
-    }
-  }
-}
+```
+git clone https://github.com/MarcEtienneDartus/Loa.git
 ```
 
-_2 - User reponse generation_
+2. Then **in the project folder** run:
 
-After getting all the information in order to answer the user demand, **we use Natural Language Generation to display a response**.
-
-additionally, **we display the concenred result(s) on the right side of our web application**.
-
-In our example we want to display a map of the result and tell it to the user.
-
-_4 - Node.js API response_
-
-Gathering all of these steps, our API will return a sample response :
-
-```json
-{
-  "intent": "Misunderstanding",
-  "type": null,
-  "location": null,
-  "message": "I find it pretty cool 🤓",
-  "results": []
-}
+```
+docker-compose up
 ```
 
-<a name="recommendation-engine"/>
+The project will then be available on http://DOCKER_IP_HOST url, which in most cases, will be http://localhost
 
-### Recommendation Engine
+## 📝 To do
 
-<a name="testing"/>
-
-## 🏃‍♀️ Testing
+- [x] Desing & Prototype on Figma
+- [x] Define constraints and objectives
+- [x] Implement basic front-end interface
+- [x] Train wit.ai agent on our intents
+- [x] Design and Connect Node API to wit.ai
+- [x] Gather data and design Recommendation Engine
+- [x] Serve our APIS as services and host them
+- [x] Finish front-end interface
+- [x] Test along the way

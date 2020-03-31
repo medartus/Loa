@@ -6,7 +6,13 @@ import ResizableTextarea from "../ResizableTextarea";
 import Bubble from "../Bubble";
 
 import logo from "../../assets/logo.png";
-import { BOT, USER, THINKING, INIT_BUBBLES } from "../../Constants";
+import {
+  BOT,
+  USER,
+  THINKING,
+  INIT_BUBBLES,
+  ERROR_BUBBLES
+} from "../../Constants";
 
 const NO_LOCATION_MESSAGE =
   "Oh, I can't access your location. Please allow me to access it so I can help you.";
@@ -45,7 +51,10 @@ const Chat = ({ userLocation, setRestaurants, setLoading, loading }) => {
           user: { coordinates: userLocation }
         })
       };
-      return fetch(process.env.REACT_APP_API_ENDPOINT+"/api/v1/message/", requestOptions);
+      return fetch(
+        process.env.REACT_APP_API_ENDPOINT + "/api/v1/message/",
+        requestOptions
+      );
     };
 
     if (loading && userLocation !== null) {
@@ -59,7 +68,12 @@ const Chat = ({ userLocation, setRestaurants, setLoading, loading }) => {
           setRestaurants(results);
           setLoading(false);
         })
-        .catch(e => console.log(e));
+        .catch(e => {
+          console.log(e);
+          setBotResponse(ERROR_BUBBLES);
+          setRestaurants([]);
+          setLoading(false);
+        });
     } else if (inputValue !== "" && userLocation === null) {
       setBotResponse([
         { type: BOT, bubbleType: "text", content: NO_LOCATION_MESSAGE }
