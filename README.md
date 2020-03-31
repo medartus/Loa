@@ -8,16 +8,16 @@ A small AI-based conversational agent capable of providing accurate informations
 
 ## Table of contents:
 
-- [Loa 🧙‍♀️](#loa-%f0%9f%a7%99%e2%80%8d%e2%99%80%ef%b8%8f)
+- [Loa 🧙‍♀️](#loa-%EF%B8%8F)
   - [Demo](#demo)
   - [Table of contents:](#table-of-contents)
-  - [🎯 Objectives](#%f0%9f%8e%af-objectives)
+  - [🎯 Objectives](#-objectives)
     - [Tech-Stack and Implementation](#tech-stack-and-implementation)
       - [Front-end](#front-end)
       - [Back-end](#back-end)
         - [_1 - Chatbot API (NodeJS)_](#1---chatbot-api-nodejs)
         - [_2 - Recommendation Engine API (Flask)_](#2---recommendation-engine-api-flask)
-  - [👩‍💻 Usage](#%f0%9f%91%a9%e2%80%8d%f0%9f%92%bb-usage)
+  - [👩‍💻 Usage](#-usage)
     - [Chatbot Capabilities (Workflows)](#chatbot-capabilities-workflows)
     - [**1 - How many restaurants**](#1---how-many-restaurants)
       - [Example](#example)
@@ -35,8 +35,8 @@ A small AI-based conversational agent capable of providing accurate informations
       - [Example](#example-6)
     - [**Recommendation Engine**](#recommendation-engine)
       - [Example](#example-7)
-  - [🏃‍♀️ How to test it ?](#%f0%9f%8f%83%e2%80%8d%e2%99%80%ef%b8%8f-how-to-test-it)
-  - [📝 To do](#%f0%9f%93%9d-to-do)
+  - [🏃‍♀️ How to test it ?](#%EF%B8%8F-how-to-test-it-)
+  - [📝 To do](#-to-do)
 
 ## 🎯 Objectives
 
