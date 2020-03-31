@@ -4,7 +4,7 @@ A small AI-based conversational agent capable of providing accurate informations
 
 ## Demo
 
-![](demo.gif)
+<img src="demo.gif" alt="demo" width="100%" height="auto" />
 
 ## Table of contents:
 
@@ -768,7 +768,7 @@ To obtain the profile matrices we follewed the same routine:
 
 Then with a sample input from the user: "I want to eat italain pizza", the system recommends the items that matches the most this review/description.
 
-**Here is how it works under the hood: **
+**Here is how it works under the hood:**
 
 Types of Sentence:
 
