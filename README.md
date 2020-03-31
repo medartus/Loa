@@ -6,11 +6,11 @@ A small AI-based conversational agent capable of providing accurate informations
 
 ![](demo.gif)
 
-## **Table of contents**:
+## Table of contents:
 
 - [Loa 🧙‍♀️](#loa-%f0%9f%a7%99%e2%80%8d%e2%99%80%ef%b8%8f)
   - [Demo](#demo)
-  - [**Table of contents**:](#table-of-contents)
+  - [Table of contents:](#table-of-contents)
   - [🎯 Objectives](#%f0%9f%8e%af-objectives)
     - [Tech-Stack and Implementation](#tech-stack-and-implementation)
       - [Front-end](#front-end)
@@ -34,6 +34,7 @@ A small AI-based conversational agent capable of providing accurate informations
     - [**7 - Goodbye**](#7---goodbye)
       - [Example](#example-6)
     - [**Recommendation Engine**](#recommendation-engine)
+      - [Example](#example-7)
   - [🏃‍♀️ How to test it ?](#%f0%9f%8f%83%e2%80%8d%e2%99%80%ef%b8%8f-how-to-test-it)
   - [📝 To do](#%f0%9f%93%9d-to-do)
 
@@ -500,7 +501,7 @@ Gathering all of these steps, our API will return a sample response a sample res
       "photos": [
         "https://s3-media1.fl.yelpcdn.com/bphoto/bLlFKTlVuLfmF-lIDGIjZA/o.jpg"
       ]
-    }
+    }, ...
   ]
 }
 ```
@@ -751,7 +752,105 @@ Gathering all of these steps, our API will return a sample response :
 
 ### **Recommendation Engine**
 
-As said above, we decided to build our own API and recommender system with Python, to be able to recommend restaurants to users.
+As said above, we decided to build our own API and recommender system with Python, to be able to **recommend restaurants to users**.
+
+The technique we have used is more vastly acknowledge as **collaborative filtering**:
+
+We have used ratings from users on a subset of US-based restaurants to predict the rating of a restaurant unseen by the user, let's deep dive into how we trained a model to do that.
+
+After having collected the user data with reviews and ratings, we also collected items (the restaurants) and determined **user profiles**.
+
+To obtain the profile matrices we follewed the same routine:
+
+- **Combine** the reviews/descriptions
+- **Remove** noisy data (stopwords, punctuation, ...)
+- **TF-IDF Feature vector extraction** on each of the items/users.
+
+Then with a sample input from the user: "I want to eat italain pizza", the system recommends the items that matches the most this review/description.
+
+**Here is how it works under the hood: **
+
+Types of Sentence:
+
+- I want to eat some **italian pizza**!
+- Recommend me restaurants with **fresh pasta**.
+- Can you show me restaurants with **outstanding views** ?
+
+#### Example
+
+_1 - Node.js API request :_
+
+Requesting the Node API :  
+`Endpoint :` POST /message
+
+We call our Node API we this structure :
+
+```json
+{
+  "message": "I want to eat some italian pizza!",
+  "user": {
+    "coordinates": {
+      "latitude": 34.052234,
+      "longitude": -118.243685
+    }
+  }
+}
+```
+
+_2 - Wit.ai Intent extraction :_
+
+Wit.ai will exctract intent and entities from the user question.
+
+The sentence :
+
+> I want to eat some **italian pizza**!
+
+Will return :
+
+| Variable |     Value     |
+| :------: | :-----------: |
+| `Intent` |   Recommend   |
+| `Desire` | Italian pizza |
+
+_3 - User reponse generation_
+
+After getting all the information in order to answer the user demand, **we use Natural Language Generation to display a response**.
+
+_4 - Node.js API response_
+
+Gathering all of these steps, our API will return a sample response :
+
+```json
+{
+  "intent": "Recommend",
+  "type": null,
+  "location": null,
+  "message": "Oh, italian pizza is a good idea! Let me recommend you these restaurants. 🔮",
+  "results": [
+    {
+      "name": "I want to eat some **italian pizza**!",
+      "id": "jjJc_CrkB2HodEinB6xWww",
+      "url": "https://www.yelp.com/biz/venezias-new-york-style-pizzeria-tempe-4?adjust_creative=94DePyCeUwdjASSwoI0YbA&utm_campaign=yelp_api_v3&utm_medium=api_v3_graphql&utm_source=94DePyCeUwdjASSwoI0YbA",
+      "display_phone": "(212) 254-5370",
+      "review_count": 714,
+      "rating": 4,
+      "price": "$",
+      "location": {
+        "address1": "174 2nd Ave",
+        "city": "Tempe",
+        "postal_code": "85282"
+      },
+      "coordinates": {
+        "latitude": 40.7303859,
+        "longitude": -73.9860613
+      },
+      "photos": [
+        "https://s3-media4.fl.yelpcdn.com/bphoto/kblyz8LxF5FCGuMvLeJFqg/o.jpg"
+      ]
+    }, ...
+  ]
+}
+```
 
 ## 🏃‍♀️ How to test it ?
 
