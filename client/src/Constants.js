@@ -12,8 +12,7 @@ const INIT_BUBBLES = [
 ];
 const ERROR_BUBBLES = [
   {
-    type: BOT,
-    bubbleType: "text",
+    type: "text",
     content:
       "Uuuh, something went wrong behind the scenes... 🙄, try refreshing the page !"
   }

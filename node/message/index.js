@@ -17,6 +17,7 @@ router.post("/message", (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
 
   const { message, user } = req.body;
+  console.log(message);
 
   if (message === undefined) throw new ErrorHandler(404, "message is required");
   if (user === undefined) throw new ErrorHandler(404, "user is required");

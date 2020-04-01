@@ -1,54 +1,48 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { RestaurantContainer, Chat } from "./components";
-import { defaultFilters, getSorted } from "./Constants";
+import { useLocation } from "./Hooks/useLocation";
+import Context from "./Context";
+
+// const reducer = (state, action) => {
+//   switch (action.type) {
+//     case "SET_RESTAURANTS":
+//       return { ...state, restaurants: action.payload };
+//     case "SET_LOADING":
+//       return { ...state, loading: action.payload };
+//     case "SET_FILTERS":
+//       return { ...state, filters: action.payload };
+//     default:
+//       return state;
+//   }
+// };
+
+// const initialState = {
+//   restaurants: [],
+//   loading: false,
+//   filters: defaultFilters
+// };
 
 const App = () => {
-  const [userLocation, setUserLocation] = useState(null);
   const [restaurants, setRestaurants] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [filters, setFilters] = useState(defaultFilters);
+  const userLocation = useLocation();
 
-  useEffect(() => {
-    localizeUser();
-  }, []);
+  // useEffect(() => {
+  //   dispatch({ type: "SET_LOADING", payload: false });
+  // }, [restaurants]);
 
-  useEffect(() => {
-    setLoading(false);
-  }, [restaurants]);
-
-  useEffect(() => {
-    const sortedRestaurants = getSorted(filters, restaurants, userLocation);
-    setRestaurants(sortedRestaurants);
-  }, [filters, userLocation]);
-
-  const localizeUser = () => {
-    navigator.geolocation.getCurrentPosition(position => {
-      const userLocation = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-      };
-      setUserLocation(userLocation);
-    });
-  };
+  // useEffect(() => {
+  //   const sortedRestaurants = getSorted(filters, restaurants, userLocation);
+  //   dispatch({ type: "SET_RESTAURANTS", payload: sortedRestaurants });
+  // }, [filters, userLocation]);
 
   return (
-    <div className="app">
-      <Chat
-        userLocation={userLocation}
-        setRestaurants={setRestaurants}
-        setLoading={setLoading}
-        loading={loading}
-        filters={filters}
-      />
-      <RestaurantContainer
-        loading={loading}
-        restaurants={restaurants}
-        filters={filters}
-        setFilters={setFilters}
-        userLocation={userLocation}
-      />
-    </div>
+    <Context.Provider value={{ userLocation, restaurants, setRestaurants }}>
+      <div className="app">
+        <Chat />
+        <RestaurantContainer />
+      </div>
+    </Context.Provider>
   );
 };
 

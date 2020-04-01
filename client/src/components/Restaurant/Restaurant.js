@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import "./Restaurant.css";
 
 import Tilt from "react-tilt";
@@ -14,24 +14,43 @@ const PHOTO_DEFAULT =
 const ICON_SIZE = 15;
 const ICON_COLOR = "#4949e7";
 const SKELETON_WIDTH = 50;
+const TILT_STYLES = { width: "45%", height: "33vh" };
+const TILT_OPTIONS = { scale: 1.04, max: 10 };
 
-const Restaurant = ({ content, index }) => {
+const Restaurant = memo(({ content, index }) => {
+  const {
+    categories,
+    photos,
+    rating,
+    url,
+    location: { city, postal_code },
+    price,
+    review_count,
+    name,
+    coordinates: { latitude, longitude }
+  } = content;
+
   const getCategories = () => {
     let rep = "";
-    for (let i in content.categories) {
-      rep += content.categories[i].title + " ";
+    for (let i in categories) {
+      rep += categories[i].title + " ";
     }
     return rep;
   };
 
   const getImgUrl = () => {
-    return !content.photos[0].includes("None")
-      ? content.photos[0]
-      : PHOTO_DEFAULT;
+    return !photos[0].includes("None") ? photos[0] : PHOTO_DEFAULT;
+  };
+
+  const handleMaps = e => {
+    window.open(
+      `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`,
+      "_blank"
+    );
+    e.stopPropagation();
   };
 
   const renderStars = () => {
-    const rating = content.rating;
     let stars = [];
     for (let i = 0.5; i < 5.5; i += 1.0) {
       if (rating > i) stars.push(IoIosStar);
@@ -52,59 +71,55 @@ const Restaurant = ({ content, index }) => {
     );
   };
 
+  const renderTop = () => (
+    <div className="element-top">
+      <img className="element-image" alt="restaurant" src={getImgUrl()} />
+      <div className="element-infos">
+        <div className="info-container">
+          <MdLocationOn color={ICON_COLOR} size={ICON_SIZE} />
+          <p className="city">
+            {postal_code} {city}
+          </p>
+        </div>
+        <div className="info-container">
+          <p className="price">{price}</p>
+          <p className="price-feedback">{priceFeedback(content)}</p>
+        </div>
+        <div className="info-container">
+          {renderStars()}
+          <p className="votes">({review_count} votes)</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderBottom = () => (
+    <div className="element-bottom">
+      <div className="element-main-info">
+        <p className="name">{name}</p>
+        <p className="categories">{getCategories()}</p>
+      </div>
+      <div className="element-more">
+        <div onClick={handleMaps} className="more-button ">
+          <img src={maps_icon} alt="maps" className="maps-icon" />
+        </div>
+      </div>
+    </div>
+  );
+
   return (
-    <Tilt
-      options={{ max: 10, scale: 1.04 }}
-      style={{ width: "45%", height: "33vh" }}
-    >
+    <Tilt options={TILT_OPTIONS} style={TILT_STYLES}>
       <div
         className="restaurant-element"
         style={{ animation: `slipIn 0.5s ease-in-out ${index * 100}ms` }}
-        onClick={() => window.open(content.url, "_blank")}
+        onClick={() => window.open(url, "_blank")}
       >
-        <div className="element-top">
-          <img className="element-image" alt="restaurant" src={getImgUrl()} />
-          <div className="element-infos">
-            <div className="info-container">
-              <MdLocationOn color={ICON_COLOR} size={ICON_SIZE} />
-              <p className="city">
-                {content.location.postal_code} {content.location.city}
-              </p>
-            </div>
-            <div className="info-container">
-              <p className="price">{content.price}</p>
-              <p className="price-feedback">{priceFeedback(content)}</p>
-            </div>
-            <div className="info-container">
-              {renderStars()}
-              <p className="votes">({content.review_count} votes)</p>
-            </div>
-          </div>
-        </div>
-        <div className="element-bottom">
-          <div className="element-main-info">
-            <p className="name">{content.name}</p>
-            <p className="categories">{getCategories()}</p>
-          </div>
-          <div className="element-more">
-            <div
-              onClick={e => {
-                window.open(
-                  `https://www.google.com/maps/search/?api=1&query=${content.coordinates.latitude},${content.coordinates.longitude}`,
-                  "_blank"
-                );
-                e.stopPropagation();
-              }}
-              className="more-button "
-            >
-              <img src={maps_icon} alt="maps" className="maps-icon" />
-            </div>
-          </div>
-        </div>
+        {renderTop()}
+        {renderBottom()}
       </div>
     </Tilt>
   );
-};
+});
 
 const SkeletonRestaurant = () => (
   <div className="restaurant-element" style={{ width: "45%", height: "33vh" }}>

@@ -1,67 +1,65 @@
-import React, { useState } from "react";
+import React, { useState, memo, useLayoutEffect, useRef } from "react";
 import "./ResizableTextarea.css";
 
-const ResizableTextarea = ({
-  inputValue,
-  setInputValue,
-  setShouldSend,
-  ...rest
-}) => {
-  const [state, setState] = useState({
-    rows: 1,
-    minRows: 1,
-    maxRows: 10
-  });
+const TEXTAREA_LINE_HEIGHT = 22;
+const MIN_ROWS = 1;
+const MAX_ROWS = 10;
+const TEXTAREA_STYLES = inputValue => ({
+  resize: "none",
+  lineHeight: 1,
+  width: inputValue.length === 0 ? "100%" : "80%"
+});
 
-  const handleChange = event => {
-    const textareaLineHeight = 20;
-    const { minRows, maxRows } = state;
-    const newValue = event.target.value;
+const ResizableTextarea = memo(({ setShouldSend, messageRef, ...props }) => {
+  const [rows, setRows] = useState(1);
+  const [inputValue, setInputValue] = useState("");
 
-    const previousRows = event.target.rows;
-    event.target.rows = minRows; // reset number of rows in textarea
+  const textareaRef = useRef(null);
 
-    let currentRows = Math.floor(
-      event.target.scrollHeight / textareaLineHeight
-    );
-    if (newValue.includes("\n")) currentRows = minRows;
+  useLayoutEffect(() => {
+    if (inputValue !== "") {
+      const newValue = textareaRef.current.value;
+      const previousRows = textareaRef.current.rows;
+      textareaRef.current.rows = MIN_ROWS; // reset number of rows in textarea
 
-    if (currentRows === previousRows) {
-      event.target.rows = currentRows;
+      let currentRows = Math.floor(
+        textareaRef.current.scrollHeight / TEXTAREA_LINE_HEIGHT
+      );
+
+      const includesReturn = newValue.includes("\n");
+      // reset to minRows when no content
+      if (includesReturn) currentRows = MIN_ROWS;
+      // if number of rows didn't change, reset to what it was
+      if (currentRows === previousRows) textareaRef.current.rows = currentRows;
+      // if content exceeds threshold, clip to maxrows
+      if (currentRows >= MAX_ROWS) {
+        textareaRef.current.rows = MAX_ROWS;
+        textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
+      }
+      // reset rows
+      setRows(Math.min(currentRows, MAX_ROWS));
+      // if content is valid to be sent, send it
+      const isNotEmpty = newValue
+        .split("")
+        .some(letter => letter !== "\n" && letter !== " ");
+      if (includesReturn && isNotEmpty) {
+        messageRef.current = newValue;
+        setInputValue("");
+        setShouldSend(true);
+      }
     }
-
-    if (currentRows >= maxRows) {
-      event.target.rows = maxRows;
-      event.target.scrollTop = event.target.scrollHeight;
-    }
-    // reset auto rows
-    setState({
-      ...state,
-      rows: Math.min(currentRows, maxRows)
-    });
-    // if content is valid to be sent
-    if (
-      newValue.includes("\n") &&
-      newValue.split("").some(letter => letter !== "\n" && letter !== " ")
-    ) {
-      setShouldSend(true);
-    }
-
-    setInputValue(newValue);
-  };
+  }, [inputValue, textareaRef, setRows, setShouldSend, messageRef]);
 
   return (
     <textarea
-      {...rest}
-      style={{
-        resize: "none",
-        width: inputValue.length === 0 ? "100%" : "80%"
-      }}
-      rows={state.rows}
+      {...props}
+      ref={textareaRef}
+      style={TEXTAREA_STYLES(inputValue)}
+      rows={rows}
       value={inputValue}
-      onChange={e => handleChange(e)}
+      onChange={({ target: { value } }) => setInputValue(value)}
     />
   );
-};
+});
 
 export default ResizableTextarea;

@@ -1,4 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, {
+  useEffect,
+  useContext,
+  useReducer,
+  useCallback,
+  memo,
+  useRef
+} from "react";
 import "./Chat.css";
 
 import { IoMdSend } from "react-icons/io";
@@ -13,84 +20,136 @@ import {
   INIT_BUBBLES,
   ERROR_BUBBLES
 } from "../../Constants";
+import Context from "../../Context";
 
-const NO_LOCATION_MESSAGE =
-  "Oh, I can't access your location. Please allow me to access it so I can help you.";
 const ICON_COLOR = "#4949e7";
+const NO_LOCATION_MESSAGE =
+  "Oh, I can't access your location. 📍 Please allow me to access it so I can help you.";
 const ICON_SIZE = 32;
 
-const Chat = ({ userLocation, setRestaurants, setLoading, loading }) => {
-  const [inputValue, setInputValue] = useState("");
-  const [bubbles, setBubbles] = useState(INIT_BUBBLES);
-  const [shouldSend, setShouldSend] = useState(false);
-  const [botResponse, setBotResponse] = useState(null);
+// reducer and init state for the Chat component
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "SET_BUBBLES":
+      return { ...state, bubbles: action.payload };
+    case "SET_SHOULD_SEND":
+      return { ...state, shouldSend: action.payload };
+    case "SET_BOT_RESPONSE":
+      return { ...state, botResponse: action.payload };
+    default:
+      return state;
+  }
+};
 
-  const handleSend = async () => {
-    setBubbles([
-      { type: THINKING, content: null, bubbleType: "text" },
-      { type: USER, content: inputValue, bubbleType: "text" },
-      ...bubbles.filter(b => b.type !== THINKING)
-    ]);
-    setShouldSend(false);
+const initialState = {
+  bubbles: INIT_BUBBLES,
+  shouldSend: false,
+  botResponse: null
+};
+
+// helper functions
+const filteredThinking = bubbles => [
+  ...bubbles.filter(b => b.type !== THINKING)
+];
+
+const callApi = (input, userLocation) => {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      message: input,
+      user: { coordinates: userLocation }
+    })
+  };
+  const endpoint = process.env.REACT_APP_API_ENDPOINT;
+  return fetch(`${endpoint}/api/v1/message/`, requestOptions);
+};
+
+// memoizing the two presentational components
+const Header = memo(() => (
+  <div className="header-chat">
+    <img src={logo} alt="Loa" className="header-logo" />
+    <p className="header-chat-text">Loa</p>
+  </div>
+));
+
+const BubbleContainer = memo(({ bubbles }) => (
+  <div className="bubbles-container">
+    {bubbles.map((b, i) => (
+      <Bubble key={i} {...b} />
+    ))}
+  </div>
+));
+
+const Chat = () => {
+  const [{ bubbles, shouldSend, botResponse }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
+  // this ref will contain the message from the user
+  const messageRef = useRef("");
+  // get location and restaurants setter from Context
+  const { userLocation, setRestaurants } = useContext(Context);
+
+  const handleSend = () => {
+    dispatch({
+      type: "SET_BUBBLES",
+      payload: [
+        { type: THINKING, content: null, bubbleType: "text" },
+        {
+          type: USER,
+          content: messageRef.current,
+          bubbleType: "text"
+        },
+        ...filteredThinking(bubbles)
+      ]
+    });
+    dispatch({ type: "SET_SHOULD_SEND", payload: false });
   };
 
-  useEffect(() => {
-    const send = async () => {
-      if (shouldSend) await handleSend();
-    };
-    send();
-  }, [shouldSend]);
+  // wrapped in useCallback to not change on every render as a useEffect dependency (see below)
+  const handleSendMemo = useCallback(handleSend, [bubbles, dispatch]);
 
   useEffect(() => {
-    const callApi = input => {
-      const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: input,
-          user: { coordinates: userLocation }
-        })
-      };
-      return fetch(
-        process.env.REACT_APP_API_ENDPOINT + "/api/v1/message/",
-        requestOptions
-      );
-    };
+    if (shouldSend) handleSendMemo();
+  }, [shouldSend, handleSendMemo]);
 
-    if (loading && userLocation !== null) {
-      const input = inputValue.substr(0, inputValue.length - 1); // Remove '\n' caracter at the end
-      setInputValue("");
-      callApi(input)
-        .then(response => response.json())
-        .then(data => {
-          const results = data.results !== null ? data.results : [];
-          setBotResponse(data.message);
-          setRestaurants(results);
-          setLoading(false);
-        })
-        .catch(e => {
-          console.log(e);
-          setBotResponse(ERROR_BUBBLES);
-          setRestaurants([]);
-          setLoading(false);
+  const fetchRestaurantsMemo = useCallback(() => {
+    const inputValue = messageRef.current;
+    if (inputValue && inputValue !== "") {
+      if (userLocation !== null) {
+        const input = inputValue.substr(0, inputValue.length - 1); // Remove '\n' caracter at the end
+        // fetch restaurants
+        callApi(input, userLocation)
+          .then(response => response.json())
+          .then(data => {
+            const results = data.results !== null ? data.results : [];
+            dispatch({ type: "SET_BOT_RESPONSE", payload: data.message });
+            setRestaurants(results);
+          })
+          .catch(e => {
+            console.log(e);
+            dispatch({ type: "SET_BOT_RESPONSE", payload: ERROR_BUBBLES });
+            setRestaurants([]);
+          });
+      } else {
+        dispatch({
+          type: "SET_BOT_RESPONSE",
+          payload: [{ type: "text", content: NO_LOCATION_MESSAGE }]
         });
-    } else if (inputValue !== "" && userLocation === null) {
-      setBotResponse([
-        { type: BOT, bubbleType: "text", content: NO_LOCATION_MESSAGE }
-      ]);
-      setInputValue("");
-      setLoading(false);
+      }
     }
-  }, [loading, setLoading, setRestaurants]);
+  }, [userLocation, dispatch, setRestaurants, messageRef]);
 
   useEffect(() => {
     if (bubbles.length > 1) {
       const { type } = bubbles[0];
-      // user has sent last message, we stop thinking the previous ones ane push thinking to last
-      if (type === THINKING) setLoading(true);
+      // user has sent last message, we stop thinking the previous ones ane push thinking to last (fetch restaurants)
+      if (type === THINKING) fetchRestaurantsMemo();
     }
-  }, [bubbles, setLoading]);
+  }, [bubbles, fetchRestaurantsMemo]);
 
+  // we received bots responses, and reset the bubbles
   useEffect(() => {
     if (botResponse !== null) {
       let newBubbles = botResponse.map(b => ({
@@ -98,33 +157,25 @@ const Chat = ({ userLocation, setRestaurants, setLoading, loading }) => {
         bubbleType: b.type,
         content: b.content
       }));
-      newBubbles.push(...bubbles.filter(b => b.type !== THINKING));
-      setBubbles(newBubbles);
-      setBotResponse(null);
+      newBubbles.push(...filteredThinking(bubbles));
+      dispatch({ type: "SET_BUBBLES", payload: newBubbles });
+      dispatch({ type: "SET_BOT_RESPONSE", payload: null });
     }
   }, [botResponse]);
 
-  const renderHeader = () => (
-    <div className="header-chat">
-      <img src={logo} alt="Loa" className="header-logo" />
-      <p className="header-chat-text">Loa</p>
-    </div>
+  // wrapped in callbakc because passed to ResizableTextarea, and shouldn't change on every render
+  const setShouldSendMemo = useCallback(
+    payload => dispatch({ type: "SET_SHOULD_SEND", payload }),
+    [dispatch]
   );
-  const renderBubbleContainer = () => (
-    <div className="bubbles-container">
-      {bubbles.map((b, i) => (
-        <Bubble key={i} {...b} />
-      ))}
-    </div>
-  );
+
   const renderInput = () => (
     <div className="chat-input-container">
       <ResizableTextarea
         className="chat-input"
         placeholder="Send a message..."
-        inputValue={inputValue}
-        setInputValue={setInputValue}
-        setShouldSend={setShouldSend}
+        messageRef={messageRef}
+        setShouldSend={setShouldSendMemo}
       />
       <IoMdSend
         className="send-logo"
@@ -136,8 +187,8 @@ const Chat = ({ userLocation, setRestaurants, setLoading, loading }) => {
   );
   return (
     <div className="chat-container">
-      {renderHeader()}
-      {renderBubbleContainer()}
+      <Header />
+      <BubbleContainer bubbles={bubbles} />
       {renderInput()}
     </div>
   );
