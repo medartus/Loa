@@ -17,7 +17,8 @@ A small AI-based conversational agent capable of providing accurate informations
       - [Back-end](#back-end)
         - [_1 - Chatbot API (NodeJS)_](#1---chatbot-api-nodejs)
         - [_2 - Recommendation Engine API (Flask)_](#2---recommendation-engine-api-flask)
-  - [👩‍💻 Usage](#-usage)
+  - [🏃‍♀️ How to test it ?](#%EF%B8%8F-how-to-test-it-)
+  - [👩‍💻 Usage (Workflows)](#-usage)
     - [Chatbot Capabilities (Workflows)](#chatbot-capabilities-workflows)
     - [**1 - How many restaurants**](#1---how-many-restaurants)
       - [Example](#example)
@@ -35,7 +36,6 @@ A small AI-based conversational agent capable of providing accurate informations
       - [Example](#example-6)
     - [**Recommendation Engine**](#recommendation-engine)
       - [Example](#example-7)
-  - [🏃‍♀️ How to test it ?](#%EF%B8%8F-how-to-test-it-)
   - [📝 To do](#-to-do)
 
 ## 🎯 Objectives
@@ -82,9 +82,27 @@ Flask is a lightweight WSGI web application framework. It is designed to make ge
 
 We use Flask to build a basic API that will handle only one route for recommending restaurants. This API is agnostic of all the intent extracting and analysis logic, it's only made to provide an abstraction to return recommended restaurants to the NodeJS API.
 
-## 👩‍💻 Usage
+## 🏃‍♀️ How to test it ?
 
-### Chatbot Capabilities (Workflows)
+You can test the project with a live demo by going [there!](https://loabot.netlify.com/)
+
+Or, you can test this project locally with **Docker** using the following steps :
+
+1. First clone this repository
+
+```
+git clone https://github.com/MarcEtienneDartus/Loa.git
+```
+
+2. Then **in the project folder** run:
+
+```
+docker-compose up
+```
+
+The project will then be available on http://DOCKER_IP_HOST url, which in most cases, will be http://localhost
+
+## 👩‍💻 Usage (Workflows)
 
 ### **1 - How many restaurants**
 
@@ -180,7 +198,12 @@ Gathering all of these steps, our API will return a sample response :
       "longitude": -105.782067
     }
   },
-  "message": "There are 2952 restaurants in Colorado. ⏲️",
+  "message": [
+    {
+      "type": "text",
+      "content": "There are 2952 restaurants in Colorado. ⏲️"
+    }
+  ],
   "results": []
 }
 ```
@@ -317,7 +340,12 @@ Gathering all of these steps, our API will return a sample response :
       "longitude": -118.243685
     }
   },
-  "message": "You can find a selection of restaurants in Los Angeles. 🏨",
+  "message": [
+    {
+      "type": "text",
+      "content": "You can find a selection of restaurants in Los Angeles. 🏨"
+    }
+  ],
   "results": [
     {
       "name": "Howlin' Ray's",
@@ -479,7 +507,12 @@ Gathering all of these steps, our API will return a sample response a sample res
       "longitude": -74.005973
     }
   },
-  "message": "The best restaurant in New York is LoveMama. 💯",
+  "message": [
+    {
+      "type": "text",
+      "content": "The best restaurant in New York is LoveMama. 💯"
+    }
+  ],
   "results": [
     {
       "name": "LoveMama",
@@ -562,7 +595,16 @@ Gathering all of these steps, our API will return a sample response :
   "intent": "Greeting",
   "type": null,
   "location": null,
-  "message": "Hi, what's can I do for you today ? 👩",
+  "message": [
+    {
+      "type": "text",
+      "content": "Hi, what's can I do for you today ? 👩"
+    },
+    {
+      "type": "gif",
+      "content": "https://media.giphy.com/media/14aa5GbbHT3bHO/source.gif"
+    }
+  ],
   "results": []
 }
 ```
@@ -623,7 +665,16 @@ Gathering all of these steps, our API will return a sample response :
   "intent": "Example",
   "type": null,
   "location": null,
-  "message": "Here's some examples: 📝 - Can you recommend me an italian restaurant ?\n     - What is the number of restaurants in Seattle ?   - Can you show me the restaurants around me ?\n   - What is the best restaurant in Los Angeles ?\n",
+  "message": [
+    {
+      "type": "text",
+      "content": "Here's some examples: 📝 - Can you recommend me an italian restaurant ?\n     - What is the number of restaurants in    Seattle ?   - Can you show me the restaurants around me ?\n   - What is the best restaurant in Los Angeles ?\n"
+    },
+    {
+      "type": "gif",
+      "content": "https://media.giphy.com/media/szeVLlECC8ThC/source.gif"
+    }
+  ],
   "results": []
 }
 ```
@@ -684,7 +735,16 @@ Gathering all of these steps, our API will return a sample response :
   "intent": "Thanks",
   "type": null,
   "location": null,
-  "message": "Don't worry, I'm very happy to help you ! 🤗 Need more help ?",
+  "message":  [
+    {
+      "type": "text",
+      "content": "Don't worry, I'm very happy to help you ! 🤗 Need more help ?"
+    },
+    {
+      "type": "gif",
+      "content": "https://media.giphy.com/media/LrQkEUJ3s8hLmO9fGH/source.gif"
+    }
+  ],
   "results": []
 }
 ```
@@ -745,7 +805,16 @@ Gathering all of these steps, our API will return a sample response :
   "intent": "Goodbye",
   "type": null,
   "location": null,
-  "message": "I was a pleasure to help you, goodbye ! 😀",
+  "message": [
+    {
+      "type": "text",
+      "content": "I was a pleasure to help you, goodbye ! 😀"
+    },
+    {
+      "type": "gif",
+      "content": "https://media.giphy.com/media/ZA5DTtqkU8bQDHuu16/source.gif"
+    }
+  ],
   "results": []
 }
 ```
@@ -825,7 +894,12 @@ Gathering all of these steps, our API will return a sample response :
   "intent": "Recommend",
   "type": null,
   "location": null,
-  "message": "Oh, italian pizza is a good idea! Let me recommend you these restaurants. 🔮",
+  "message": [
+    {
+      "type": "text",
+      "content": "Oh, italian pizza is a good idea! Let me recommend you these restaurants. 🔮"
+    }
+  ],
   "results": [
     {
       "name": "I want to eat some **italian pizza**!",
@@ -851,27 +925,6 @@ Gathering all of these steps, our API will return a sample response :
   ]
 }
 ```
-
-## 🏃‍♀️ How to test it ?
-
-You can test the project with a live demo by going [there!](https://loabot.netlify.com/)
-
-Or, you can test this project locally with **Docker** using the following steps :
-
-1. First clone this repository
-
-```
-git clone https://github.com/MarcEtienneDartus/Loa.git
-```
-
-2. Then **in the project folder** run:
-
-```
-docker-compose up
-```
-
-The project will then be available on http://DOCKER_IP_HOST url, which in most cases, will be http://localhost
-
 ## 📝 To do
 
 - [x] Desing & Prototype on Figma
