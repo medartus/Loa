@@ -2,6 +2,8 @@
 
 A small AI-based conversational agent capable of providing accurate informations about U.S located restaurants, and integrated with a content-based recommendation engine.
 
+Made with ❤️ by [Alexandre ZAJAC](https://github.com/alexZajac), [Nicolas CAILLIEUX](https://github.com/Exorth98) and [myself](https://github.com/MarcEtienneDartus).
+
 ## Demo
 
 <img src="demo.gif" alt="demo" width="100%" height="auto" />
