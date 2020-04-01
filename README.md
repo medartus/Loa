@@ -17,6 +17,7 @@ A small AI-based conversational agent capable of providing accurate informations
       - [Back-end](#back-end)
         - [_1 - Chatbot API (NodeJS)_](#1---chatbot-api-nodejs)
         - [_2 - Recommendation Engine API (Flask)_](#2---recommendation-engine-api-flask)
+  - [🏃‍♀️ How to test it ?](#%EF%B8%8F-how-to-test-it-)
   - [👩‍💻 Usage](#-usage)
     - [Chatbot Capabilities (Workflows)](#chatbot-capabilities-workflows)
     - [**1 - How many restaurants**](#1---how-many-restaurants)
@@ -35,7 +36,6 @@ A small AI-based conversational agent capable of providing accurate informations
       - [Example](#example-6)
     - [**Recommendation Engine**](#recommendation-engine)
       - [Example](#example-7)
-  - [🏃‍♀️ How to test it ?](#%EF%B8%8F-how-to-test-it-)
   - [📝 To do](#-to-do)
 
 ## 🎯 Objectives
@@ -81,6 +81,26 @@ Flask is a lightweight WSGI web application framework. It is designed to make ge
 **How we use it**
 
 We use Flask to build a basic API that will handle only one route for recommending restaurants. This API is agnostic of all the intent extracting and analysis logic, it's only made to provide an abstraction to return recommended restaurants to the NodeJS API.
+
+## 🏃‍♀️ How to test it ?
+
+You can test the project with a live demo by going [there!](https://loabot.netlify.com/)
+
+Or, you can test this project locally with **Docker** using the following steps :
+
+1. First clone this repository
+
+```
+git clone https://github.com/MarcEtienneDartus/Loa.git
+```
+
+2. Then **in the project folder** run:
+
+```
+docker-compose up
+```
+
+The project will then be available on http://DOCKER_IP_HOST url, which in most cases, will be http://localhost
 
 ## 👩‍💻 Usage
 
@@ -851,27 +871,6 @@ Gathering all of these steps, our API will return a sample response :
   ]
 }
 ```
-
-## 🏃‍♀️ How to test it ?
-
-You can test the project with a live demo by going [there!](https://loabot.netlify.com/)
-
-Or, you can test this project locally with **Docker** using the following steps :
-
-1. First clone this repository
-
-```
-git clone https://github.com/MarcEtienneDartus/Loa.git
-```
-
-2. Then **in the project folder** run:
-
-```
-docker-compose up
-```
-
-The project will then be available on http://DOCKER_IP_HOST url, which in most cases, will be http://localhost
-
 ## 📝 To do
 
 - [x] Desing & Prototype on Figma
