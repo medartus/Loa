@@ -10,6 +10,14 @@ const INIT_BUBBLES = [
       "Hi, I'm Loa, a new friend of yours that will help you choose among thousands of restaurants in the US! 🤤"
   }
 ];
+const ERROR_BUBBLES = [
+  {
+    type: BOT,
+    bubbleType: "text",
+    content:
+      "Uuuh, something went wrong behind the scenes... 🙄, try refreshing the page !"
+  }
+];
 
 const selectStyles = width => ({
   control: styles => ({
@@ -62,7 +70,7 @@ const priceDescSorter = (a, b) =>
     ? 1
     : b.price === null
     ? -1
-    : a.price.length - b.price.length;
+    : b.price.length - a.price.length;
 
 const deg2rad = deg => deg * (Math.PI / 180);
 
@@ -151,5 +159,6 @@ export {
   USER,
   THINKING,
   BOT_WRITE_TIME,
+  ERROR_BUBBLES,
   INIT_BUBBLES
 };
