@@ -18,7 +18,7 @@ A small AI-based conversational agent capable of providing accurate informations
         - [_1 - Chatbot API (NodeJS)_](#1---chatbot-api-nodejs)
         - [_2 - Recommendation Engine API (Flask)_](#2---recommendation-engine-api-flask)
   - [🏃‍♀️ How to test it ?](#%EF%B8%8F-how-to-test-it-)
-  - [👩‍💻 Usage](#-usage)
+  - [👩‍💻 Usage (Workflows)](#-usage)
     - [Chatbot Capabilities (Workflows)](#chatbot-capabilities-workflows)
     - [**1 - How many restaurants**](#1---how-many-restaurants)
       - [Example](#example)
@@ -102,9 +102,7 @@ docker-compose up
 
 The project will then be available on http://DOCKER_IP_HOST url, which in most cases, will be http://localhost
 
-## 👩‍💻 Usage
-
-### Chatbot Capabilities (Workflows)
+## 👩‍💻 Usage (Workflows)
 
 ### **1 - How many restaurants**
 
