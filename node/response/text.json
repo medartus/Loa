@@ -15,8 +15,8 @@
     "Goodbye, but come back soon ! 🔜"
   ],
   "example": [
-    "I can give you some examples: \n   - Can you show me the restaurants around me ?\n    - What is the best restaurant in New York ?\n    - What is the number of restaurants in Colorado ?\n    - Can you recommend me a restaurant with an awesome view ?",
-    "Here's some examples: 📝 - Can you recommend me an italian restaurant ?\n     - What is the number of restaurants in Seattle ?   - Can you show me the restaurants around me ?\n   - What is the best restaurant in Los Angeles ?\n"
+    "I can give you some examples: \"Can you show me the restaurants around me ?\", \"What is the best restaurant in New York ?\", \"What is the number of restaurants in Colorado ?\" or \"Can you recommend me a restaurant with an awesome view ?\"",
+    "Here's some examples 📝:  \"Can you recommend me an italian restaurant ?\", \"What is the number of restaurants in Seattle ?\", \"Can you show me the restaurants around me ?\" or \"What is the best restaurant in Los Angeles ?\""
   ],
   "misunderstanding": [
     "Oops, I didn't understand, can you reformulate? 🙃",

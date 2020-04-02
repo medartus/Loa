@@ -10,6 +10,7 @@ RUN npm install -g nodemon --quiet
 # copy files
 COPY . .
 EXPOSE 4000
+ENV ENVIRONMENT=dev
 
 # start dev server
-CMD ["nodemon", "server.js"]
+CMD ["npm", "run", "dev"]
