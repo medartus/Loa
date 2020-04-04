@@ -90,13 +90,7 @@ You can test the project with a live demo by going [there!](https://loabot.netli
 
 Or, you can test this project locally with **Docker** using the following steps :
 
-1. First clone this repository
-
-```
-git clone https://github.com/MarcEtienneDartus/Loa.git
-```
-
-2. Then **in the project folder** run:
+1. Then **in the project folder** run:
 
 ```
 docker-compose up
@@ -216,7 +210,6 @@ Types of Question :
 
 - Can you **show** me the **restaurants** **around me** ?
 - Can you **show** me the **restaurants** in **Los Angeles** ?
-- **Map** of **restaurants** in **Paris**.
 
 #### Example
 
