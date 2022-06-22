@@ -1,7 +1,7 @@
 Flask==1.1.1
 Flask-RESTful==0.3.8
 nltk==3.4.5
-numpy==1.17.4
+numpy==1.22.0
 pandas==0.25.3
 scikit-learn==0.22
 gunicorn==19.10.0
